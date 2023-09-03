@@ -1,0 +1,6 @@
+bin/
+obj/
+.*/
+*.config
+*.sublime*
+*.swp

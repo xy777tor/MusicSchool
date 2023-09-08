@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicSchool.Domain", "Music
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicSchool.Application", "MusicSchool.Application\MusicSchool.Application.csproj", "{067C96D7-EBF5-4AF2-9EBF-5364D06ABF8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{040C0C05-9850-4939-A7F0-AFAE2FBC8855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicSchool.WebUI", "WebUI\MusicSchool.WebUI.csproj", "{040C0C05-9850-4939-A7F0-AFAE2FBC8855}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

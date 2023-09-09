@@ -2,11 +2,10 @@
 @{
     ViewData["Title"] = "Расписание";
     IEnumerable<SelectListItem> week = Html.GetEnumSelectList<WeekDays>();
-    int i = 0;
 }
 
 <style>
-    .text-light.rounded-circle.bg-primary {
+    .text-light.rounded-circle {
         font-size: 1.5em;
         width: 1.6em;
         height: 1.6em;
@@ -17,24 +16,58 @@
     .timesheetDataHeader {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: repeat(2);
     }
+
+    .timesheetHeader {
+        display: grid;
+        grid-template-columns: 1fr 18fr;
+    }
+
+    .timesheetHours {
+        align-items: end;
+        font-size: 2.1em;
+        width: 1.7em;
+        height: 1.7em;
+        margin: auto;
+        margin-bottom: 0;
+        text-decoration: none;
+        text-align: center;
+        vertical-align: central;
+    }
+
+        .timesheetHours:hover {
+            cursor: pointer;
+        }
 
     .day {
         font-size: 1.2em;
     }
 </style>
 
-<div class="timesheetDataHeader">
-    @{
-        i = DateTime.Today.Day - ((int)DateTime.Today.DayOfWeek) + 1;
-    }
-    @foreach (var day in week)
-    {
-        <div class="text-center">
-            <div class="day">@day.Text</div>
-            <div class="text-light rounded-circle bg-primary">@i</div>
-        </div>
-        i++;
-    }
+<div class="timesheetHeader">
+    <a class="timesheetHours btn-primary rounded-circle">+</a>
+    <div class="timesheetDataHeader">
+        @{
+            int today = (int)DateTime.Today.Day;
+            int currentDayOfWeek = ((int)DateTime.Today.DayOfWeek);
+            currentDayOfWeek = currentDayOfWeek == 0 ? 7 : currentDayOfWeek;
+            int numOfDay = today - currentDayOfWeek + 1;
+        }
+        @foreach (var day in week)
+        {
+            <div class="text-center">
+                @if (numOfDay >= today)
+                {
+                    <div class="day text-primary">@day.Text</div>
+                    <div class="text-light rounded-circle bg-primary">@numOfDay</div>
+                }
+                else
+                {
+                    <div class="day text-secondary">@day.Text</div>
+                    <div class="text-light rounded-circle bg-secondary">@numOfDay</div>
+                }
+            </div>
+            numOfDay++;
+        }
+    </div>
 </div>

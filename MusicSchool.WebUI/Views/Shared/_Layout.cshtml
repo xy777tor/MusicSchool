@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MusicSchool.WebUI.styles.css" asp-append-version="true" />
+    <style>
+        .nav-item {
+            font-size: 2rem;
+        }
+
+            .nav-item a:hover {
+                background-color: rgba(0, 0, 0, 0.2);
+            }
+    </style>
 </head>
 <body>
     <header class="toast-header border-bottom" style="line-height: 2.35rem">
@@ -19,30 +28,17 @@
             </div>
             <div class="container">
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                    <div class="offcanvas-header border-bottom">
+                        <h1 class="offcanvas-title" id="offcanvasNavbarLabel">Навигация</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page">Главная</a>
+                                <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Главная</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link">Ссылка</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Выпадающий список
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item">Действие</a></li>
-                                    <li><a class="dropdown-item">Другое действие</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item">Что-то еще здесь</a></li>
-                                </ul>
+                                <a class="nav-link active" aria-current="page" asp-controller="Timesheet" asp-action="TimesheetPage">Расписание</a>
                             </li>
                         </ul>
                     </div>
@@ -51,11 +47,9 @@
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted" style="line-height: 2.35rem">
         <div class="container d-flex justify-content-center" style="text-align: center">

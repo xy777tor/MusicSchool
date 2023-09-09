@@ -1,0 +1,40 @@
+﻿@using MusicSchool.WebUI.Views.Enums;
+@{
+    ViewData["Title"] = "Расписание";
+    IEnumerable<SelectListItem> week = Html.GetEnumSelectList<WeekDays>();
+    int i = 0;
+}
+
+<style>
+    .text-light.rounded-circle.bg-primary {
+        font-size: 1.5em;
+        width: 1.6em;
+        height: 1.6em;
+        margin: auto;
+        vertical-align: central;
+    }
+
+    .timesheetDataHeader {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(2);
+    }
+
+    .day {
+        font-size: 1.2em;
+    }
+</style>
+
+<div class="timesheetDataHeader">
+    @{
+        i = DateTime.Today.Day - ((int)DateTime.Today.DayOfWeek) + 1;
+    }
+    @foreach (var day in week)
+    {
+        <div class="text-center">
+            <div class="day">@day.Text</div>
+            <div class="text-light rounded-circle bg-primary">@i</div>
+        </div>
+        i++;
+    }
+</div>

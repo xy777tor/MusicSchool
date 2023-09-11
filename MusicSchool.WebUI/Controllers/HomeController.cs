@@ -7,4 +7,9 @@ public class HomeController : Controller
     {
         return View();
     }
+
+    public IActionResult Timesheet()
+    {
+        return View();
+    }
 }

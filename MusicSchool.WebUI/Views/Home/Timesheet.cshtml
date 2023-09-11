@@ -1,0 +1,110 @@
+﻿@using MusicSchool.WebUI.Views.Enums;
+@{
+    ViewData["Title"] = "Расписание";
+    IEnumerable<SelectListItem> week = Html.GetEnumSelectList<WeekDays>();
+}
+
+<link rel="stylesheet" href="~/css/timesheet.css" />
+
+<div class="timesheet-header">
+    <div class="timesheet-add-event-btn">
+        <span></span>
+        <a class="timesheet-add-event btn-light rounded-circle">+</a>
+    </div>
+    <div class="timesheet-date">
+        @{
+            int today = (int)DateTime.Today.Day;
+            int currentDayOfWeek = ((int)DateTime.Today.DayOfWeek);
+            currentDayOfWeek = currentDayOfWeek == 0 ? 7 : currentDayOfWeek;
+            int numOfDay = today - currentDayOfWeek + 1;
+            Html.ViewContext.RouteData.ToString();
+        }
+        @foreach (var day in week)
+        {
+            <div class="text-center">
+                @if (numOfDay > today)
+                {
+                    <div class="day-of-week text-secondary">@day.Text</div>
+                    <div class="text-dark" id="num">@numOfDay</div>
+                    <span></span>
+                }
+                else if (numOfDay == today)
+                {
+                    <div class="day-of-week text-primary">@day.Text</div>
+                    <div class="today bg-primary shadow" id="num">@numOfDay</div>
+                    <span></span>
+                }
+                else
+                {
+                    <div class="day-of-week text-secondary">@day.Text</div>
+                    <div class="text-secondary" id="num">@numOfDay<span></span></div>
+                    <span></span>
+                }
+            </div>
+            numOfDay++;
+        }
+    </div>
+</div>
+<div class="timesheet-body">
+    <div>
+        <div class="timesheet-time-column">
+        <div>
+            <div class="timesheet-time">
+                <div class="timesheet-hour text-end"></div>
+                @for (int i = 1; i < 24; i++)
+                {
+                    <div class="timesheet-hour text-end">
+                        <span class="time-hour">@TimeOnly.MinValue.AddHours(i)</span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="timesheet-event-date-column">
+        <div class="timesheet-event-date">
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+            <div>
+                @for (int i = 0; i < 24; i++)
+                {
+                    <div></div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

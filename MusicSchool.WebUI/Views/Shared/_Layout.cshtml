@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@{
+    string currentPage = Html.ViewContext.View.Path.Split(@"/").Last().Split(@".").First();
+}
+
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
@@ -8,6 +12,14 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/MusicSchool.WebUI.styles.css" asp-append-version="true" />
     <style>
+        :root {
+            --header-height: 4rem;
+        }
+
+        header {
+            height: var(--header-height);
+        }
+
         .nav-item {
             font-size: 2rem;
         }
@@ -15,10 +27,35 @@
             .nav-item a:hover {
                 background-color: rgba(0, 0, 0, 0.2);
             }
+
+            .nav-item .current {
+                padding-left: 1em;
+                border-left: solid;
+                border-color: blue;
+                border-width: 0.25em;
+            }
     </style>
+
+    @if (currentPage == "Timesheet")
+    {
+        <style>
+            body {
+                overflow: hidden;
+            }
+
+            nav.container.navbar-light {
+                margin-left: 0;
+                padding-left: 0;
+            }
+
+            main {
+                overflow-y: hidden;
+            }
+        </style>
+    }
 </head>
 <body>
-    <header class="toast-header border-bottom" style="line-height: 2.35rem">
+    <header class="toast-header border-bottom">
         <nav class="container navbar-light">
             <div class="container d-flex align-items-center">
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -35,10 +72,24 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Главная</a>
+                                @if (currentPage == "Index")
+                                {
+                                    <a class="nav-link active current" aria-current="page" asp-controller="Home" asp-action="Index">Главная</a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Главная</a>
+                                }
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" asp-controller="Timesheet" asp-action="TimesheetPage">Расписание</a>
+                                @if (currentPage == "Timesheet")
+                                {
+                                    <a class="nav-link active current" aria-current="page" asp-controller="Home" asp-action="Timesheet">Расписание</a>
+                                }
+                                else
+                                {
+                                    <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Timesheet">Расписание</a>
+                                }
                             </li>
                         </ul>
                     </div>
@@ -46,19 +97,26 @@
             </div>
         </nav>
     </header>
-
-    <div class="container">
-        <main role="main" class="pb-3">
+    @if (currentPage != "Timesheet")
+    {
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <footer class="border-top footer text-muted" style="line-height: 2.35rem">
+            <div class="container d-flex justify-content-center" style="text-align: center">
+                MusicSchool.WebUI<br />
+                &copy; 2023
+            </div>
+        </footer>
+    }
+    else
+    {
+        <main role="main" class="pb-3" style="padding-right: 4px">
             @RenderBody()
         </main>
-    </div>
-
-    <footer class="border-top footer text-muted" style="line-height: 2.35rem">
-        <div class="container d-flex justify-content-center" style="text-align: center">
-            MusicSchool.WebUI<br />
-            &copy; 2023
-        </div>
-    </footer>
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

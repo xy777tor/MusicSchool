@@ -1,0 +1,176 @@
+﻿:root {
+    --event-btn-font-size: 2rem;
+    --event-btn-circle-multimplyer: 1.7;
+    --event-btn-circle-size: calc(var(--event-btn-circle-multimplyer) * var(--event-btn-font-size));
+    --timesheet-header-height: calc(var(--header-height) * 1.4);
+    --scroll-width: 8px;
+}
+
+::-webkit-scrollbar {
+    width: var(--scroll-width);
+}
+
+::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: lightgrey;
+    border-radius: 5px;
+}
+
+.today {
+    font-size: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+    margin: auto;
+    vertical-align: central;
+    padding-top: 1px;
+    color: white;
+    border-radius: 50%;
+}
+
+.timesheet-date {
+    margin-right: var(--scroll-width);
+}
+
+.timesheet-date, .timesheet-event-date {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+    .timesheet-date > .text-center span {
+        position: relative;
+        display: flex;
+        bottom: 13%;
+        width: 100%;
+        height: 30px;
+        border-right: solid;
+        border-width: 0.5px;
+        border-color: lightgrey;
+    }
+
+.timesheet-header {
+    padding-bottom: 1em;
+    height: var(--timesheet-header-height);
+    background-color: white;
+    border-bottom: solid;
+    border-width: 0.5px;
+    border-color: lightgrey;
+    overflow: clip;
+}
+
+.timesheet-header, .timesheet-body {
+    display: grid;
+    grid-template-columns: 1fr 18fr;
+    min-width: 800px;
+}
+
+.timesheet-add-event-btn {
+    min-width: 65px;
+}
+
+.timesheet-header > div > span {
+    position: relative;
+    display: flex;
+    bottom: -3.7rem;
+    width: 100%;
+    height: 30px;
+    border-right: solid;
+    border-width: 0.5px;
+    border-color: lightgrey;
+}
+
+.timesheet-body {
+    height: calc(100vh - var(--header-height) - var(--timesheet-header-height));
+    overflow-y: scroll;
+}
+
+.timesheet-add-event {
+    position: relative;
+    bottom: 0.3rem;
+    margin: auto;
+    display: block;
+    font-size: var(--event-btn-font-size);
+    width: var(--event-btn-circle-size);
+    height: var(--event-btn-circle-size);
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0px 4px 7px -3px grey;
+    transition: 0.5s;
+}
+
+    .timesheet-add-event:hover {
+        box-shadow: 0px 5px 12px -1px grey;
+        cursor: pointer;
+    }
+
+.day-of-week {
+    font-size: 1em;
+    text-transform: uppercase;
+}
+
+.timesheet-time-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    width: 100%;
+}
+
+.timesheet-time {
+    min-width: 65px;
+    width: var(--event-btn-circle-size);
+}
+
+.timesheet-event-date-column {
+    display: flex;
+}
+
+.timesheet-event-date {
+    width: 100%;
+}
+
+.timesheet-event-date-column > .timesheet-event-date > div > div {
+    width: 100%;
+    height: 40px;
+    border-bottom: solid;
+    border-right: solid;
+    border-color: lightgrey;
+    border-width: 0.5px;
+}
+
+.timesheet-hour {
+    height: 40px
+}
+
+.time-hour {
+    position: relative;
+    top: -33%;
+    padding-right: 10px;
+}
+
+#num {
+    font-size: 2em;
+    font-family: Courier New, Courier, monospace;
+    font-weight: 600;
+}
+
+@media (max-width: 801px) {
+    :root {
+        --event-btn-font-size: 1.3rem;
+    }
+
+    .timesheet-add-event-btn, .timesheet-time {
+        min-width: 45px;
+    }
+
+    .timesheet-header, .timesheet-body {
+        width: auto;
+        min-width: 360px;
+    }
+
+    .timesheet-header {
+        height: 65px;
+    }
+}

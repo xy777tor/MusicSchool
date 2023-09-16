@@ -5,8 +5,13 @@ namespace MusicSchool.WebUI.Controllers;
 public class TimesheetController : Controller
 {
     [HttpPost]
-    public string AddEvent(AddEventViewModel model)
+    public IActionResult AddEvent(AddEventViewModel model)
     {
-        return model.Title;
+        if (ModelState.IsValid)
+        {
+            return Ok(model.Title);
+        }
+
+        return View("../Home/Timesheet");
     }
 }

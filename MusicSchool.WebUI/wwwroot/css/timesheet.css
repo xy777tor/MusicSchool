@@ -193,11 +193,20 @@
         min-width: 45px;
     }
 
-    .timesheet-add-event {
-        top: initial;
-        left: 49%;
-        bottom: -20%;
-    }
+        .timesheet-add-event-btn > a > div {
+            height: fit-content;
+            vertical-align: central;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .timesheet-add-event {
+            top: initial;
+            left: 49%;
+            bottom: -20%;
+        }
 
     .timesheet-header, .timesheet-body {
         width: auto;

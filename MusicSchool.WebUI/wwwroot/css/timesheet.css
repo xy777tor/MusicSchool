@@ -43,7 +43,7 @@
     border-bottom: solid;
     border-width: 0.5px;
     border-color: lightgrey;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .timesheet-date {
@@ -215,5 +215,9 @@
 
     .timesheet-date > .text-center > div {
         margin: 0.1em auto;
+    }
+
+    .time-hour {
+        top: -29%;
     }
 }

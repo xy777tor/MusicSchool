@@ -16,17 +16,19 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить занятие</h1>
                 <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            @using (Html.BeginForm("AddEvent", "Timesheet", FormMethod.Post))
-            {
+            <div>
                 <div class="modal-body d-flex justify-content-between align-items-center">
-                    <label asp-for="Title" class="form-label w-auto h-100 mb-0 me-2 align-baseline">Название</label>
-                    <input id="titleInput" asp-for="Title" class="form-check-input w-100 h-auto m-0 align-baseline" placeholder="Kavo">
+                    <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Название</label>
+                    <input id="titleInput"
+                           asp-for="Title"
+                           class="form-control w-100 h-auto m-0 align-baseline"
+                           placeholder="Kavo">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
                     <button type="submit" class="btn btn-primary">Добавить</button>
                 </div>
-            }
+            </div>
         </div>
     </div>
 </div>
@@ -162,7 +164,7 @@
     document.addEventListener("keydown", function (event) {
         if (event.keyCode === 13 || event.keyCode === 107) {
             openAddEventButton.click();
-        } 
+        }
         if (event.keyCode === 27) {
             closeModal.click();
         }

@@ -1,4 +1,6 @@
 ﻿@using MusicSchool.WebUI.Views.Enums;
+@using MusicSchool.WebUI.Models;
+@model AddEventViewModel;
 @{
     Layout = "~/Views/Shared/_TimesheetLayout.cshtml";
     ViewData["Title"] = "Расписание";
@@ -7,11 +9,35 @@
 
 <link rel="stylesheet" href="~/css/timesheet.css" />
 
+<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить занятие</h1>
+                <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Html.BeginForm("AddEvent", "Timesheet", FormMethod.Post))
+            {
+                <div class="modal-body d-flex justify-content-between align-items-center">
+                    <label asp-for="Title" class="form-label w-auto h-100 mb-0 me-2 align-baseline">Название</label>
+                    <input id="titleInput" asp-for="Title" class="form-check-input w-100 h-auto m-0 align-baseline" placeholder="Kavo">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 <div class="timesheet">
     <div class="timesheet-header">
         <div class="timesheet-add-event-btn">
             <span></span>
-            <a class="timesheet-add-event btn-light rounded-circle">
+            <a id="openAddEventModal" class="timesheet-add-event btn-light rounded-circle"
+               data-bs-toggle="modal"
+               data-bs-target="#addEventModal">
                 <div>+</div>
             </a>
         </div>
@@ -121,3 +147,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    var titleInput = document.getElementById("titleInput");
+    var targetModal = document.getElementById("addEventModal");
+    var closeModal = document.getElementById("closeModal");
+
+    targetModal.addEventListener("shown.bs.modal", function () {
+        titleInput.focus();
+    });
+
+    var openAddEventButton = document.getElementById("openAddEventModal");
+
+    document.addEventListener("keydown", function (event) {
+        if (event.keyCode === 13 || event.keyCode === 107) {
+            openAddEventButton.click();
+        } 
+        if (event.keyCode === 27) {
+            closeModal.click();
+        }
+    });
+</script>

@@ -2,7 +2,7 @@
     --event-btn-font-size: 2rem;
     --event-btn-circle-multimplyer: 1.7;
     --event-btn-circle-size: calc(var(--event-btn-circle-multimplyer) * var(--event-btn-font-size));
-    --timesheet-header-height: calc(var(--header-height) * 1.4);
+    --timesheet-header-height: 5rem;
     --scroll-width: 8px;
 }
 
@@ -20,6 +20,12 @@
     border-radius: 5px;
 }
 
+.timesheet {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 .today {
     font-size: 1.5em;
     width: 1.5em;
@@ -31,19 +37,40 @@
     border-radius: 50%;
 }
 
-.timesheet-date {
-    margin-right: var(--scroll-width);
+.timesheet-header {
+    display: flex;
+    background-color: white;
+    border-bottom: solid;
+    border-width: 0.5px;
+    border-color: lightgrey;
+    overflow: hidden;
 }
 
-.timesheet-date, .timesheet-event-date {
-    display: grid;
+.timesheet-date {
+    display: flex;
+    width: 100%;
     grid-template-columns: repeat(7, 1fr);
+    padding-right: var(--scroll-width);
+}
+
+.timesheet-event-date {
+    display: flex;
+}
+
+    .timesheet-event-date > div {
+        width: 100%;
+    }
+
+.timesheet-date > .text-center {
+    position: relative;
+    display: block;
+    width: 100%;
 }
 
     .timesheet-date > .text-center span {
-        position: relative;
-        display: flex;
-        bottom: 13%;
+        position: absolute;
+        bottom: 0;
+        display: block;
         width: 100%;
         height: 30px;
         border-right: solid;
@@ -51,30 +78,37 @@
         border-color: lightgrey;
     }
 
-.timesheet-header {
-    padding-bottom: 1em;
-    height: var(--timesheet-header-height);
-    background-color: white;
-    border-bottom: solid;
-    border-width: 0.5px;
-    border-color: lightgrey;
-    overflow: clip;
-}
-
-.timesheet-header, .timesheet-body {
-    display: grid;
-    grid-template-columns: 1fr 18fr;
-    min-width: 800px;
-}
-
 .timesheet-add-event-btn {
+    position: relative;
+    display: flex;
+    width: min-content;
     min-width: 65px;
 }
 
+    .timesheet-add-event-btn > a > div {
+        margin: auto;
+        height: 100%;
+        text-align: center;
+    }
+
+.timesheet-add-event {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    font-size: var(--event-btn-font-size);
+    width: var(--event-btn-circle-size);
+    height: var(--event-btn-circle-size);
+    text-decoration: none;
+    box-shadow: 0px 4px 7px -3px grey;
+    transition: 0.5s;
+}
+
 .timesheet-header > div > span {
-    position: relative;
-    display: flex;
-    bottom: -3.7rem;
+    position: absolute;
+    display: block;
+    bottom: 0;
     width: 100%;
     height: 30px;
     border-right: solid;
@@ -82,38 +116,26 @@
     border-color: lightgrey;
 }
 
-.timesheet-body {
-    height: calc(100vh - var(--header-height) - var(--timesheet-header-height));
-    overflow-y: scroll;
+.timesheet-add-event:hover {
+    box-shadow: 0px 5px 12px -1px grey;
+    cursor: pointer;
 }
-
-.timesheet-add-event {
-    position: relative;
-    bottom: 0.3rem;
-    margin: auto;
-    display: block;
-    font-size: var(--event-btn-font-size);
-    width: var(--event-btn-circle-size);
-    height: var(--event-btn-circle-size);
-    text-decoration: none;
-    text-align: center;
-    box-shadow: 0px 4px 7px -3px grey;
-    transition: 0.5s;
-}
-
-    .timesheet-add-event:hover {
-        box-shadow: 0px 5px 12px -1px grey;
-        cursor: pointer;
-    }
 
 .day-of-week {
     font-size: 1em;
     text-transform: uppercase;
 }
 
-.timesheet-time-column {
+.timesheet-body {
     display: flex;
-    flex-direction: row;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: scroll;
+}
+
+.timesheet-time-column {
+    overflow: hidden;
+    display: flex;
     justify-content: end;
     width: 100%;
 }
@@ -125,13 +147,15 @@
 
 .timesheet-event-date-column {
     display: flex;
+    width: 100%;
 }
 
 .timesheet-event-date {
     width: 100%;
 }
 
-.timesheet-event-date-column > .timesheet-event-date > div > div {
+.timesheet-event-date-column > .timesheet-event-date > div > span {
+    display: block;
     width: 100%;
     height: 40px;
     border-bottom: solid;
@@ -156,9 +180,9 @@
     font-weight: 600;
 }
 
-@media (max-width: 801px) {
+@media (max-width: 501px) {
     :root {
-        --event-btn-font-size: 1.3rem;
+        --event-btn-font-size: 1.6rem;
     }
 
     .timesheet-add-event-btn, .timesheet-time {
@@ -168,9 +192,5 @@
     .timesheet-header, .timesheet-body {
         width: auto;
         min-width: 360px;
-    }
-
-    .timesheet-header {
-        height: 65px;
     }
 }

@@ -10,6 +10,6 @@ public class HomeController : Controller
 
     public IActionResult Timesheet()
     {
-        return View();
+        return View("Timesheet", "_TimesheetLayout");
     }
 }

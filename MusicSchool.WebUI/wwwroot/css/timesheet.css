@@ -67,6 +67,10 @@
     width: 100%;
 }
 
+    .timesheet-date > .text-center > div {
+        margin: 1em auto;
+    }
+
     .timesheet-date > .text-center span {
         position: absolute;
         bottom: 0;
@@ -189,8 +193,18 @@
         min-width: 45px;
     }
 
+    .timesheet-add-event {
+        top: initial;
+        left: 49%;
+        bottom: -20%;
+    }
+
     .timesheet-header, .timesheet-body {
         width: auto;
         min-width: 360px;
+    }
+
+    .timesheet-date > .text-center > div {
+        margin: 0.1em auto;
     }
 }

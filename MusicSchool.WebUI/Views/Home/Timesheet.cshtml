@@ -29,20 +29,26 @@
                     @if (numOfDay > today)
                     {
                         <span></span>
-                        <div class="day-of-week text-secondary">@day.Text</div>
-                        <div class="text-dark" id="num">@numOfDay</div>
+                        <div>
+                            <div class="day-of-week text-secondary">@day.Text</div>
+                            <div class="text-dark" id="num">@numOfDay</div>
+                        </div>
                     }
                     else if (numOfDay == today)
                     {
                         <span></span>
-                        <div class="day-of-week text-primary">@day.Text</div>
-                        <div class="today bg-primary shadow" id="num">@numOfDay</div>
+                        <div>
+                            <div class="day-of-week text-primary">@day.Text</div>
+                            <div class="today bg-primary shadow" id="num">@numOfDay</div>
+                        </div>
                     }
                     else
                     {
                         <span></span>
-                        <div class="day-of-week text-secondary">@day.Text</div>
-                        <div class="text-secondary" id="num">@numOfDay</div>
+                        <div>
+                            <div class="day-of-week text-secondary">@day.Text</div>
+                            <div class="text-secondary" id="num">@numOfDay</div>
+                        </div>
                     }
                 </div>
                 numOfDay++;

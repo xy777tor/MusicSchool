@@ -11,6 +11,6 @@ public class HomeController : Controller
 
     public IActionResult Timesheet()
     {
-        return View(new AddEventViewModel());
+        return View();
     }
 }

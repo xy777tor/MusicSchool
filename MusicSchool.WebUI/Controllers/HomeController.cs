@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MusicSchool.WebUI.Models;
 
 namespace MusicSchool.WebUI.Controllers;
 public class HomeController : Controller
@@ -10,6 +11,6 @@ public class HomeController : Controller
 
     public IActionResult Timesheet()
     {
-        return View("Timesheet", "_TimesheetLayout");
+        return View(new AddEventViewModel());
     }
 }

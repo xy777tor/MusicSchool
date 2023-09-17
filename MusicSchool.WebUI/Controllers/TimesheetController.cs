@@ -7,11 +7,11 @@ public class TimesheetController : Controller
     [HttpPost]
     public IActionResult AddEvent(AddEventViewModel model)
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            return Ok(model.Title);
+            return Redirect("~/Home/Error");
         }
 
-        return View("../Home/Timesheet");
+        return Ok(model.Title);
     }
 }

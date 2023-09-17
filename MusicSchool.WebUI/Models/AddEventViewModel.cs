@@ -4,6 +4,6 @@ namespace MusicSchool.WebUI.Models;
 
 public class AddEventViewModel
 {
-    [Required(AllowEmptyStrings = false, ErrorMessage = "Введи название, заебал.")]
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название события.")]
     public string Title { get; set; } = null!;
 }

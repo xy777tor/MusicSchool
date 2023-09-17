@@ -1,17 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MusicSchool.WebUI.Models;
+using MusicSchool.Core;
 
 namespace MusicSchool.WebUI.Controllers;
 public class TimesheetController : Controller
 {
     [HttpPost]
-    public IActionResult AddEvent(AddEventViewModel model)
+    public IActionResult AddEvent(AddEventWindowViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
             return Redirect("~/Home/Error");
         }
 
-        return Ok(model.Title);
+        var model = new EventWindow()
+        {
+            Title = viewModel.Title
+        };
+
+        return Ok(viewModel.Title);
     }
 }

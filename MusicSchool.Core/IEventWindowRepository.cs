@@ -4,6 +4,6 @@ namespace MusicSchool.Domain;
 public interface IEventWindowRepository
 {
     void Add(EventWindow eventWindow);
-    
-    List<EventWindow> GetAll();
+
+    List<EventWindow> GetWeekEvents(DateTime monday);
 }

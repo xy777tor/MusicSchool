@@ -1,6 +1,4 @@
 ﻿@using MusicSchool.WebUI.Views.Enums;
-@using MusicSchool.WebUI.Models;
-@model AddEventWindowViewModel;
 @{
     Layout = "~/Views/Shared/_TimesheetLayout.cshtml";
     ViewData["Title"] = "Расписание";
@@ -17,36 +15,9 @@
                 <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div>
-                <form asp-controller="Timesheet" asp-action="AddEvent">
-                    <div class="ms-3">
-                        <span asp-validation-for="Title" class="text-danger" id="title-validator"></span>
-                    </div>
-                    <div class="modal-body d-flex justify-content-between align-items-center">
-                        <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Название</label>
-                        <input id="titleInput"
-                               asp-for="Title"
-                               class="form-control w-100 h-auto m-0 align-baseline"
-                               placeholder="Введите название...">
-                    </div>
-                    <div class="modal-body d-flex justify-content-between align-items-center">
-                        <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Начало</label>
-                        <input id="startDateTimeInput"
-                               asp-for="StartDateTime"
-                               asp-format="{0:yyyy-MM-ddTHH:mm}"
-                               class="form-control w-100 h-auto m-0 align-baseline">
-                    </div>
-                    <div class="modal-body d-flex justify-content-between align-items-center">
-                        <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Конец</label>
-                        <input id="endDateTimeInput"
-                               asp-for="EndDateTime"
-                               asp-format="{0:yyyy-MM-ddTHH:mm}"
-                               class="form-control w-100 h-auto m-0 align-baseline">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                        <button type="submit" class="btn btn-primary">Добавить</button>
-                    </div>
-                </form>
+                @{
+                    await Html.RenderPartialAsync("AddEventWindow");
+                }
             </div>
         </div>
     </div>

@@ -1,17 +1,26 @@
 ﻿using MusicSchool.Core;
 using MusicSchool.Domain;
 
-namespace DataAccess;
+namespace MusicSchool.DataAccess;
 
 public class EventWindowRepository : IEventWindowRepository
 {
+    private List<EventWindow> _eventWindows = new List<EventWindow>();
+
     public void Add(EventWindow eventWindow)
     {
-        throw new NotImplementedException();
+        _eventWindows.Add(eventWindow);
     }
 
-    public List<EventWindow> GetAll()
+    public List<EventWindow> GetWeekEvents(DateTime monday)
     {
-        throw new NotImplementedException();
+        List<EventWindow> eventWindows = new List<EventWindow>();
+
+        for (int i = 0; i < 8; i++)
+        {
+            eventWindows.AddRange(_eventWindows.FindAll(s => s.StartDateTime == monday.AddDays(i)));
+        }
+
+        return eventWindows;
     }
 }

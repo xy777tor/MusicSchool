@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MusicSchool.Core\MusicSchool.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

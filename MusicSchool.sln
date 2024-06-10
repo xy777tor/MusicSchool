@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicSchool.Application", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicSchool.WebUI", "MusicSchool.WebUI\MusicSchool.WebUI.csproj", "{6C686384-FB98-42D8-B89C-E4469239E5D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{88C85F59-6BF9-4DDE-8C64-6592927EA522}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicSchool.DataAccess", "DataAccess\MusicSchool.DataAccess.csproj", "{88C85F59-6BF9-4DDE-8C64-6592927EA522}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

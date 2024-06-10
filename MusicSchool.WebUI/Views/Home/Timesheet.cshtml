@@ -7,11 +7,29 @@
 
 <link rel="stylesheet" href="~/css/timesheet.css" />
 
+<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить занятие</h1>
+                <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div>
+                @{
+                    await Html.RenderPartialAsync("AddEventWindow");
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="timesheet">
     <div class="timesheet-header">
         <div class="timesheet-add-event-btn">
             <span></span>
-            <a class="timesheet-add-event btn-light rounded-circle">
+            <a id="openAddEventModal" class="timesheet-add-event btn-light rounded-circle"
+               data-bs-toggle="modal"
+               data-bs-target="#addEventModal">
                 <div>+</div>
             </a>
         </div>
@@ -121,3 +139,40 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<script>
+
+    var titleInput = document.getElementById("titleInput");
+    var titleValidator = document.getElementById("title-validator");
+    var targetModal = document.getElementById("addEventModal");
+    var closeModal = document.getElementById("closeModal");
+    var openAddEventButton = document.getElementById("openAddEventModal");
+
+    targetModal.addEventListener("shown.bs.modal", function () {
+        titleInput.focus();
+    });
+
+    var openHandler = function (event) {
+        if (event.keyCode === 13 || event.keyCode === 107) {
+            openAddEventButton.click();
+            document.removeEventListener("keydown", openHandler);
+            document.addEventListener("keydown", closeHandler);
+        }
+    }
+
+    var closeHandler = function (event) {
+        if (event.keyCode === 27) {
+            closeModal.click();
+            document.addEventListener("keydown", openHandler);
+        }
+    }
+
+    document.addEventListener("keydown", openHandler);
+
+</script>

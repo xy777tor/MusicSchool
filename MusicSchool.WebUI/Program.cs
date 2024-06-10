@@ -1,7 +1,13 @@
+using MusicSchool.DataAccess;
+using MusicSchool.Application;
+using MusicSchool.Domain;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<IEventWindowService, EventWindowService>();
+builder.Services.AddSingleton<IEventWindowRepository, EventWindowRepository>();
 
 var app = builder.Build();
 

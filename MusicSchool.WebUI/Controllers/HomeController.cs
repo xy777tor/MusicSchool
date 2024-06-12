@@ -19,8 +19,8 @@ public class HomeController : Controller
 
     public IActionResult Timesheet()
     {
-        TimesheetViewModel model = new TimesheetViewModel();
-        return View();
+        TimesheetViewModel model = new TimesheetViewModel(DateTime.Today);
+        return View(model);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

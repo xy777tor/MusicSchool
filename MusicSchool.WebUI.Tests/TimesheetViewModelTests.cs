@@ -15,15 +15,15 @@ public class TimesheetViewModelTests
         DateTime saturday = DateTime.Parse("14.06.2024");
 
         // act
-        int mondayResult = viewModel.GetMonday(monday);
-        int sundayResult = viewModel.GetMonday(sunday);
-        int thuesdayResult = viewModel.GetMonday(thuesday);
-        int saturdayResult = viewModel.GetMonday(saturday);
+        DateTime mondayResult = viewModel.GetMonday(monday);
+        DateTime sundayResult = viewModel.GetMonday(sunday);
+        DateTime thuesdayResult = viewModel.GetMonday(thuesday);
+        DateTime saturdayResult = viewModel.GetMonday(saturday);
 
         // assert
-        Assert.Equal(10, mondayResult);
-        Assert.Equal(10, sundayResult);
-        Assert.Equal(10, thuesdayResult);
-        Assert.Equal(10, saturdayResult);
+        Assert.Equal(monday, mondayResult);
+        Assert.Equal(monday, sundayResult);
+        Assert.Equal(monday, thuesdayResult);
+        Assert.Equal(monday, saturdayResult);
     }
 }

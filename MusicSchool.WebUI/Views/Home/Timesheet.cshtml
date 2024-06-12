@@ -17,7 +17,7 @@
             </div>
             <div>
                 @{
-                    await Html.RenderPartialAsync("AddEventWindow");
+                    await Html.RenderPartialAsync("AddEventWindow", Model.AddEventWindowViewModel);
                 }
             </div>
         </div>
@@ -31,16 +31,13 @@
             <a id="openAddEventModal" class="timesheet-add-event btn-light rounded-circle"
                data-bs-toggle="modal"
                data-bs-target="#addEventModal">
-                <div>+</div>
+               <div>+</div>
             </a>
         </div>
         <div class="timesheet-date">
             @{
-                int today = (int)DateTime.Today.Day;
-                int currentDayOfWeek = ((int)DateTime.Today.DayOfWeek);
-                currentDayOfWeek = currentDayOfWeek == 0 ? 7 : currentDayOfWeek;
-                int numOfDay = today - currentDayOfWeek + 1;
-                Html.ViewContext.RouteData.ToString();
+                DateTime today = DateTime.Today;
+                DateTime numOfDay = Model.GetMonday(today);
             }
             @foreach (var day in week)
             {
@@ -50,7 +47,7 @@
                         <span></span>
                         <div>
                             <div class="day-of-week text-secondary">@day.Text</div>
-                            <div class="text-dark" id="num">@numOfDay</div>
+                            <div class="text-dark" id="num">@numOfDay.Day</div>
                         </div>
                     }
                     else if (numOfDay == today)
@@ -58,7 +55,7 @@
                         <span></span>
                         <div>
                             <div class="day-of-week text-primary">@day.Text</div>
-                            <div class="today bg-primary shadow" id="num">@numOfDay</div>
+                            <div class="today bg-primary shadow" id="num">@numOfDay.Day</div>
                         </div>
                     }
                     else
@@ -66,11 +63,11 @@
                         <span></span>
                         <div>
                             <div class="day-of-week text-secondary">@day.Text</div>
-                            <div class="text-secondary" id="num">@numOfDay</div>
+                            <div class="text-secondary" id="num">@numOfDay.Day</div>
                         </div>
                     }
                 </div>
-                numOfDay++;
+                numOfDay = numOfDay.AddDays(1);
             }
         </div>
     </div>

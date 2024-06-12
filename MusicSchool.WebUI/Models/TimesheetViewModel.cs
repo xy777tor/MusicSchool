@@ -5,19 +5,27 @@ namespace MusicSchool.WebUI.Models;
 
 public class TimesheetViewModel
 {
-    public int GetMonday(DateTime date)
+    public AddEventWindowViewModel AddEventWindowViewModel { get; } = new AddEventWindowViewModel();
+    public DateTime RequiredDay { get; private set; }
+
+    public TimesheetViewModel(DateTime requiredDay)
+    {
+        RequiredDay = requiredDay;
+    }
+
+    public DateTime GetMonday(DateTime date)
     {
         if (date.DayOfWeek == DayOfWeek.Monday)
         {
-            return date.Day;
+            return date;
         }
         else if (date.DayOfWeek < DayOfWeek.Monday)
         {
-            return date.Day - 6;
+            return date.AddDays(-6);
         }
         else
         {
-            return date.Day - (date.DayOfWeek - DayOfWeek.Monday);
+            return date.AddDays(-(date.DayOfWeek - DayOfWeek.Monday));
         }
     }
 }

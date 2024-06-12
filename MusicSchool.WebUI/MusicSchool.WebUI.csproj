@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess\MusicSchool.DataAccess.csproj" />
     <ProjectReference Include="..\MusicSchool.Application\MusicSchool.Application.csproj" />
     <ProjectReference Include="..\MusicSchool.Core\MusicSchool.Domain.csproj" />
+    <ProjectReference Include="..\MusicSchool.DataAccess\MusicSchool.DataAccess.csproj" />
   </ItemGroup>
 
   <ItemGroup>

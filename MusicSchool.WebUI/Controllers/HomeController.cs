@@ -19,6 +19,7 @@ public class HomeController : Controller
 
     public IActionResult Timesheet()
     {
+        TimesheetViewModel model = new TimesheetViewModel();
         return View();
     }
 

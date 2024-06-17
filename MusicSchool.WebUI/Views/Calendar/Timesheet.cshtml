@@ -4,9 +4,31 @@
     Layout = "~/Views/Shared/_TimesheetLayout.cshtml";
     ViewData["Title"] = "Расписание";
     IEnumerable<SelectListItem> week = Html.GetEnumSelectList<WeekDays>();
+    string weekBackward = Model.RequiredDay.AddDays(-7).ToShortDateString();
+    string weekForward = Model.RequiredDay.AddDays(7).ToShortDateString();
 }
 
 <link rel="stylesheet" href="~/css/timesheet.css" />
+
+<div style="
+    position: absolute;
+    top: 10px;
+    right: 10px">
+    <form method="post">
+        <button asp-controller="Calendar"
+                asp-action="Timesheet"
+                asp-route-date="@weekBackward"
+                class="btn btn-primary">
+            &lt;
+        </button>
+        <button asp-controller="Calendar"
+                asp-action="Timesheet"
+                asp-route-date="@weekForward"
+                class="btn btn-primary">
+            &gt;
+        </button>
+    </form>
+</div>
 
 <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -17,7 +39,7 @@
             </div>
             <div>
                 @{
-                    await Html.RenderPartialAsync("AddEventWindow", Model.AddEventWindowViewModel);
+                    //await Html.RenderPartialAsync("AddEventWindow", Model.AddEventWindowViewModel);
                 }
             </div>
         </div>
@@ -31,13 +53,13 @@
             <a id="openAddEventModal" class="timesheet-add-event btn-light rounded-circle"
                data-bs-toggle="modal"
                data-bs-target="#addEventModal">
-               <div>+</div>
+                <div>+</div>
             </a>
         </div>
         <div class="timesheet-date">
             @{
                 DateTime today = DateTime.Today;
-                DateTime numOfDay = Model.GetMonday(today);
+                DateTime numOfDay = Model.GetMonday(Model.RequiredDay);
             }
             @foreach (var day in week)
             {

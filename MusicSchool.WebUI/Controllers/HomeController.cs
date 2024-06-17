@@ -3,6 +3,7 @@ using MusicSchool.WebUI.Models;
 using System.Diagnostics;
 
 namespace MusicSchool.WebUI.Controllers;
+
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -15,12 +16,6 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         return View();
-    }
-
-    public IActionResult Timesheet()
-    {
-        TimesheetViewModel model = new TimesheetViewModel(DateTime.Today);
-        return View(model);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

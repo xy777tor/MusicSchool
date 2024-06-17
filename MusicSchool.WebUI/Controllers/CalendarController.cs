@@ -2,13 +2,14 @@
 using MusicSchool.WebUI.Models;
 using MusicSchool.Core;
 using MusicSchool.Application;
+using Microsoft.CodeAnalysis.Elfie.Extensions;
 
 namespace MusicSchool.WebUI.Controllers;
-public class TimesheetController : Controller
+public class CalendarController : Controller
 {
     private readonly IEventWindowService _eventWindowService;
 
-    public TimesheetController(IEventWindowService eventWindowService)
+    public CalendarController(IEventWindowService eventWindowService)
     {
         _eventWindowService = eventWindowService;
     }
@@ -30,6 +31,20 @@ public class TimesheetController : Controller
 
         _eventWindowService.Create(model);
 
-        return Redirect("~/Home/Timesheet");
+        TimesheetViewModel timesheetViewModel = new(DateTime.Today);
+        return View(timesheetViewModel);
+    }
+
+    public ViewResult Timesheet()
+    {
+        return View(new TimesheetViewModel(DateTime.Today));
+    }
+
+    [Route("Calendar/Timesheet/{date}")]
+    [HttpPost]
+    public ViewResult Timesheet(string date)
+    {
+        DateTime.TryParse(date, out DateTime dateTime);
+        return View(new TimesheetViewModel(dateTime));
     }
 }

@@ -6,6 +6,7 @@ namespace MusicSchool.WebUI.Models;
 public class TimesheetViewModel
 {
     public AddEventWindowViewModel AddEventWindowViewModel { get; } = new AddEventWindowViewModel();
+
     public DateTime RequiredDay { get; private set; }
 
     public TimesheetViewModel(DateTime requiredDay)

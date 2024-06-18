@@ -32,16 +32,16 @@ public class CalendarController : Controller
         _eventWindowService.Create(model);
 
         TimesheetViewModel timesheetViewModel = new(DateTime.Today);
-        return View(timesheetViewModel);
+        return View(new TimesheetViewModel(DateTime.Today));
     }
 
+    [Route("Calendar/Timesheet")]
     public ViewResult Timesheet()
     {
         return View(new TimesheetViewModel(DateTime.Today));
     }
 
     [Route("Calendar/Timesheet/{date}")]
-    [HttpPost]
     public ViewResult Timesheet(string date)
     {
         DateTime.TryParse(date, out DateTime dateTime);

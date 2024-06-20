@@ -8,11 +8,11 @@ public class TimesheetViewModelTests
     public void GetMondayTest()
     {
         // arrange
-        TimesheetViewModel viewModel = new TimesheetViewModel() { RequiredDay = DateTime.Parse("10.06.2024") };
-        DateTime monday = DateTime.Parse("10.06.2024");
-        DateTime sunday = DateTime.Parse("16.06.2024");
-        DateTime thuesday = DateTime.Parse("11.06.2024");
-        DateTime saturday = DateTime.Parse("14.06.2024");
+        TimesheetViewModel viewModel = new TimesheetViewModel() { RequiredDay = new DateTime(2024, 6, 10) };
+        DateTime monday = new DateTime(2024, 6, 10);
+        DateTime sunday = new DateTime(2024, 6, 16);
+        DateTime thuesday = new DateTime(2024, 6, 11);
+        DateTime saturday = new DateTime(2024, 6, 14);
 
         // act
         DateTime mondayResult = viewModel.GetMonday(monday);

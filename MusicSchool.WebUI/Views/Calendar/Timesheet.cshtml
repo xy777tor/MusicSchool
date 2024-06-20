@@ -1,11 +1,56 @@
 ﻿@using MusicSchool.WebUI.Views.Enums;
+@model MusicSchool.WebUI.Models.TimesheetViewModel;
 @{
     Layout = "~/Views/Shared/_TimesheetLayout.cshtml";
     ViewData["Title"] = "Расписание";
     IEnumerable<SelectListItem> week = Html.GetEnumSelectList<WeekDays>();
+    string weekBackward = Model.RequiredDay.AddDays(-7).ToShortDateString();
+    string weekForward = Model.RequiredDay.AddDays(7).ToShortDateString();
 }
 
 <link rel="stylesheet" href="~/css/timesheet.css" />
+
+<style>
+    .calendar-navigation {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+</style>
+
+<div class="calendar-navigation">
+    <div class="me-1">
+        <form method="post" asp-controller="Calendar" asp-action="PickDate">
+            <input type="date" value="@Model.RequiredDay.ToString("yyyy-MM-dd")" asp-for="RequiredDay" />
+            <button type="submit" class="btn btn-primary">Перейти</button>
+        </form>
+    </div>
+    <div>
+        <form method="get">
+            <button asp-controller="Calendar"
+                    asp-action="Timesheet"
+                    asp-route-date="@DateTime.Today.ToShortDateString()"
+                    class="btn btn-primary">
+                Сегодня
+            </button>
+            <button asp-controller="Calendar"
+                    asp-action="Timesheet"
+                    asp-route-date="@weekBackward"
+                    class="btn btn-primary">
+                &lt;
+            </button>
+            <button asp-controller="Calendar"
+                    asp-action="Timesheet"
+                    asp-route-date="@weekForward"
+                    class="btn btn-primary">
+                &gt;
+            </button>
+        </form>
+    </div>
+</div>
 
 <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -16,7 +61,7 @@
             </div>
             <div>
                 @{
-                    await Html.RenderPartialAsync("AddEventWindow");
+                    await Html.RenderPartialAsync("AddEventWindow", Model.AddEventWindowViewModel);
                 }
             </div>
         </div>
@@ -35,11 +80,8 @@
         </div>
         <div class="timesheet-date">
             @{
-                int today = (int)DateTime.Today.Day;
-                int currentDayOfWeek = ((int)DateTime.Today.DayOfWeek);
-                currentDayOfWeek = currentDayOfWeek == 0 ? 7 : currentDayOfWeek;
-                int numOfDay = today - currentDayOfWeek + 1;
-                Html.ViewContext.RouteData.ToString();
+                DateTime today = DateTime.Today;
+                DateTime numOfDay = Model.GetMonday(Model.RequiredDay);
             }
             @foreach (var day in week)
             {
@@ -49,7 +91,7 @@
                         <span></span>
                         <div>
                             <div class="day-of-week text-secondary">@day.Text</div>
-                            <div class="text-dark" id="num">@numOfDay</div>
+                            <div class="text-dark" id="num">@numOfDay.Day</div>
                         </div>
                     }
                     else if (numOfDay == today)
@@ -57,7 +99,7 @@
                         <span></span>
                         <div>
                             <div class="day-of-week text-primary">@day.Text</div>
-                            <div class="today bg-primary shadow" id="num">@numOfDay</div>
+                            <div class="today bg-primary shadow" id="num">@numOfDay.Day</div>
                         </div>
                     }
                     else
@@ -65,11 +107,11 @@
                         <span></span>
                         <div>
                             <div class="day-of-week text-secondary">@day.Text</div>
-                            <div class="text-secondary" id="num">@numOfDay</div>
+                            <div class="text-secondary" id="num">@numOfDay.Day</div>
                         </div>
                     }
                 </div>
-                numOfDay++;
+                numOfDay = numOfDay.AddDays(1);
             }
         </div>
     </div>

@@ -3,6 +3,7 @@ using MusicSchool.WebUI.Models;
 using System.Diagnostics;
 
 namespace MusicSchool.WebUI.Controllers;
+
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -13,11 +14,6 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Timesheet()
     {
         return View();
     }

@@ -31,20 +31,25 @@ public class CalendarController : Controller
 
         _eventWindowService.Create(model);
 
-        TimesheetViewModel timesheetViewModel = new(DateTime.Today);
-        return View(new TimesheetViewModel(DateTime.Today));
+        return View(new TimesheetViewModel() { RequiredDay = DateTime.Today });
     }
 
     [Route("Calendar/Timesheet")]
     public ViewResult Timesheet()
     {
-        return View(new TimesheetViewModel(DateTime.Today));
+        return View(new TimesheetViewModel() { RequiredDay = DateTime.Today });
     }
 
     [Route("Calendar/Timesheet/{date}")]
     public ViewResult Timesheet(string date)
     {
         DateTime.TryParse(date, out DateTime dateTime);
-        return View(new TimesheetViewModel(dateTime));
+        return View(new TimesheetViewModel() { RequiredDay = dateTime });
+    }
+
+    [HttpPost]
+    public ViewResult PickDate(TimesheetViewModel viewModel)
+    {
+        return View("Timesheet", viewModel);
     }
 }

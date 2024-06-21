@@ -3,7 +3,7 @@
 namespace MusicSchool.Domain;
 public interface IEventWindowRepository
 {
-    void Add(EventWindow eventWindow);
+    void Create(EventWindow eventWindow);
 
     List<EventWindow> GetWeekEvents(DateTime monday);
 }

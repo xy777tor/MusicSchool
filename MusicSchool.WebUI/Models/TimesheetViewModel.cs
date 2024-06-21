@@ -7,6 +7,8 @@ public class TimesheetViewModel
 {
     public AddEventWindowViewModel AddEventWindowViewModel { get; } = new AddEventWindowViewModel();
 
+    public List<EventWindowViewModel> EventWindows { get; set; } = new List<EventWindowViewModel>();
+
     [BindProperty]
     public DateTime RequiredDay { get; set; }
 

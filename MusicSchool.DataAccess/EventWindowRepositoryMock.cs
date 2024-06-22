@@ -18,7 +18,7 @@ public class EventWindowRepositoryMock : IEventWindowRepository
 
         for (int i = 0; i < 7; i++)
         {
-            weekEvents.AddRange(_eventWindows.FindAll(s => s.StartDateTime == monday.Date.AddDays(i)));
+            weekEvents.AddRange(_eventWindows.FindAll(s => s.StartDateTime.Date == monday.Date.AddDays(i)));
         }
 
         return weekEvents;

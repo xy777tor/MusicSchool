@@ -27,4 +27,13 @@ public class TimesheetViewModel
             return date.AddDays(-(date.DayOfWeek - DayOfWeek.Monday));
         }
     }
+
+    public List<EventWindowViewModel> GetEventWindowViewModelsByDate(DateTime date)
+    {
+        var eventWindows = new List<EventWindowViewModel>();
+
+        eventWindows.AddRange(EventWindows.FindAll(e => e.StartDateTime.Date == date.Date));
+
+        return eventWindows;
+    }
 }

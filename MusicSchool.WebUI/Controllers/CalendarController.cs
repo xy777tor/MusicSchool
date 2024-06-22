@@ -54,7 +54,7 @@ public class CalendarController : Controller
 
     private ViewResult GetWeekTimesheetPage(string date)
     {
-        TimesheetViewModel viewModel = new TimesheetViewModel();
+        TimesheetViewModel viewModel = new();
 
         if (string.IsNullOrWhiteSpace(date) || !DateTime.TryParse(date, out DateTime dateTime))
         {

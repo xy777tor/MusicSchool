@@ -19,6 +19,19 @@
         flex-wrap: wrap;
         align-items: center;
     }
+
+    .event-window {
+        position: relative;
+        top: -900px;
+        left: 0;
+        height: 40px;
+        padding: 3px;
+        border-radius: 4px;
+        overflow-y: auto;
+        color: white;
+        background-color: #0d6efd;
+        z-index: 1;
+    }
 </style>
 
 <div class="calendar-navigation">
@@ -136,45 +149,122 @@
         <div class="timesheet-event-date-column">
             <div class="timesheet-event-date">
                 <div id="monday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        var eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
                 <div id="thuesday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(1));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
                 <div id="wednesday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(2));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
                 <div id="thursday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(3));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
                 <div id="friday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(4));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
                 <div id="saturday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(5));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
                 <div id="sunday">
-                    @for (int i = 0; i < 24; i++)
-                    {
-                        <span></span>
+                    @{
+                        for (int i = 0; i < 24; i++)
+                        {
+                            <span></span>
+                        }
+
+                        eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(6));
+                        for (int i = 0; i < eventWindows.Count; i++)
+                        {
+                            <div class="event-window">
+                                @eventWindows[i].Title<br />
+                                @eventWindows[i].StartDateTime.TimeOfDay
+                            </div>
+                        }
                     }
                 </div>
             </div>

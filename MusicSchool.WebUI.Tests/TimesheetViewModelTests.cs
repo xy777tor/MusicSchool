@@ -47,9 +47,9 @@ public class TimesheetViewModelTests
                 {
                     Title = "Title",
                     StartDateTime = new DateTime(DateOnly.FromDateTime(requiredDay.AddDays(i - minEventWindowsCount)),
-                                                 new TimeOnly(0, j)),
+                                                 new TimeOnly(j, j)),
                     EndDateTime = new DateTime(DateOnly.FromDateTime(requiredDay.AddDays(i - minEventWindowsCount)),
-                                               new TimeOnly(0, 2 * j + 1))
+                                               new TimeOnly(2 * j + 1, 2 * j + 1))
                 });
             }
         }

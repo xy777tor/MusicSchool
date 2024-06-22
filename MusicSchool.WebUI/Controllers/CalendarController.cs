@@ -37,7 +37,7 @@ public class CalendarController : Controller
 
         _eventWindowService.Create(model);
 
-        return View("Timesheet", new TimesheetViewModel() { RequiredDay = viewModel.StartDateTime.Date });
+        return GetWeekTimesheetPage(DateTime.Today.Date.ToShortDateString());
     }
 
     [Route("Calendar/Timesheet/{date?}")]

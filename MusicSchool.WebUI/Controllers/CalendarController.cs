@@ -43,13 +43,24 @@ public class CalendarController : Controller
     [Route("Calendar/Timesheet/{date?}")]
     public ViewResult Timesheet(string date)
     {
+        return GetWeekTimesheetPage(date);
+    }
+
+    [HttpPost]
+    public ViewResult PickDate(TimesheetViewModel viewModel)
+    {
+        return GetWeekTimesheetPage(viewModel.RequiredDay.ToShortDateString());
+    }
+
+    private ViewResult GetWeekTimesheetPage(string date)
+    {
         TimesheetViewModel viewModel = new TimesheetViewModel();
 
         if (string.IsNullOrWhiteSpace(date) || !DateTime.TryParse(date, out DateTime dateTime))
         {
             viewModel.RequiredDay = DateTime.Today;
         }
-        else 
+        else
         {
             viewModel.RequiredDay = dateTime;
         }
@@ -66,12 +77,6 @@ public class CalendarController : Controller
             });
         }
 
-        return View(viewModel);
-    }
-
-    [HttpPost]
-    public ViewResult PickDate(TimesheetViewModel viewModel)
-    {
         return View("Timesheet", viewModel);
     }
 }

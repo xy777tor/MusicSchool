@@ -178,6 +178,14 @@
     padding-right: 10px;
 }
 
+.event-window {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: lightblue;
+    z-index: -1;
+}
+
 #num {
     font-size: 2em;
     font-family: Courier New, Courier, monospace;

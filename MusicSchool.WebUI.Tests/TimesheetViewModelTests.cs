@@ -8,7 +8,7 @@ public class TimesheetViewModelTests
     public void GetMondayTest()
     {
         // arrange
-        TimesheetViewModel viewModel = new TimesheetViewModel() { RequiredDay = new DateTime(2024, 6, 10) };
+        TimesheetViewModel viewModel = new() { RequiredDay = new DateTime(2024, 6, 10) };
         DateTime monday = new DateTime(2024, 6, 10);
         DateTime sunday = new DateTime(2024, 6, 16);
         DateTime thuesday = new DateTime(2024, 6, 11);
@@ -25,5 +25,43 @@ public class TimesheetViewModelTests
         Assert.Equal(monday, sundayResult);
         Assert.Equal(monday, thuesdayResult);
         Assert.Equal(monday, saturdayResult);
+    }
+
+    [Fact]
+    public void GetEventWindowViewModelsByDateTest()
+    {
+        // arrange
+        DateTime requiredDay = new(2024, 6, 10);
+        TimesheetViewModel viewModel = new() { RequiredDay = requiredDay };
+        List<EventWindowViewModel> eventWindowViewModels = new();
+
+        const int weekDays = 7;
+        const int minEventWindowsCount = 3;
+        const int maxEventWindowsCount = 9;
+
+        for (int i = minEventWindowsCount; i < weekDays + minEventWindowsCount; i++)
+        {
+            for (int j = 0; j < i; j++)
+            {
+                eventWindowViewModels.Add(new()
+                {
+                    Title = "Title",
+                    StartDateTime = new DateTime(DateOnly.FromDateTime(requiredDay.AddDays(i - minEventWindowsCount)),
+                                                 new TimeOnly(j, j)),
+                    EndDateTime = new DateTime(DateOnly.FromDateTime(requiredDay.AddDays(i - minEventWindowsCount)),
+                                               new TimeOnly(2 * j + 1, 2 * j + 1))
+                });
+            }
+        }
+
+        viewModel.EventWindows.AddRange(eventWindowViewModels);
+
+        // act
+        List<EventWindowViewModel> minResult = viewModel.GetEventWindowViewModelsByDate(requiredDay);
+        List<EventWindowViewModel> maxResult = viewModel.GetEventWindowViewModelsByDate(requiredDay.AddDays(weekDays - 1));
+
+        // assert
+        Assert.Equal(minEventWindowsCount, minResult.Count);
+        Assert.Equal(maxEventWindowsCount, maxResult.Count);
     }
 }

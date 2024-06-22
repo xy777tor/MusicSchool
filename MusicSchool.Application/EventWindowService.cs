@@ -16,7 +16,7 @@ public class EventWindowService : IEventWindowService
     {
         try
         {
-            _eventWindowRepository.Add(model);
+            _eventWindowRepository.Create(model);
             return true;
         }
         catch (Exception)

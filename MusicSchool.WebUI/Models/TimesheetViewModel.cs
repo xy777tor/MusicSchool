@@ -7,6 +7,8 @@ public class TimesheetViewModel
 {
     public AddEventWindowViewModel AddEventWindowViewModel { get; } = new AddEventWindowViewModel();
 
+    public List<EventWindowViewModel> EventWindows { get; set; } = new List<EventWindowViewModel>();
+
     [BindProperty]
     public DateTime RequiredDay { get; set; }
 
@@ -24,5 +26,14 @@ public class TimesheetViewModel
         {
             return date.AddDays(-(date.DayOfWeek - DayOfWeek.Monday));
         }
+    }
+
+    public List<EventWindowViewModel> GetEventWindowViewModelsByDate(DateTime date)
+    {
+        var eventWindows = new List<EventWindowViewModel>();
+
+        eventWindows.AddRange(EventWindows.FindAll(e => e.StartDateTime.Date == date.Date));
+
+        return eventWindows;
     }
 }

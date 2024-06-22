@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IEventWindowService, EventWindowService>();
-builder.Services.AddSingleton<IEventWindowRepository, EventWindowRepository>();
+builder.Services.AddSingleton<IEventWindowRepository, EventWindowRepositoryMock>();
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿@using MusicSchool.WebUI.Views.Enums;
-@model MusicSchool.WebUI.Models.TimesheetViewModel;
+@using MusicSchool.WebUI.Models;
+@model TimesheetViewModel;
 @{
     Layout = "~/Views/Shared/_TimesheetLayout.cshtml";
     ViewData["Title"] = "Расписание";
@@ -131,7 +132,7 @@
                             <span></span>
                         }
 
-                        List<MusicSchool.WebUI.Models.EventWindowViewModel> eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay));
+                        List<EventWindowViewModel> eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay));
                         for (int i = 0; i < eventWindows.Count; i++)
                         {
                             double eventWindowDuration = (eventWindows[i].EndDateTime - eventWindows[i].StartDateTime).TotalMinutes / 60 * 2.5;

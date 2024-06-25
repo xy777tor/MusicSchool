@@ -180,15 +180,12 @@
 
 .event-window {
     position: relative;
-    top: -900px;
-    left: 0;
     height: 2.5rem;
     padding: 3px;
     border-radius: 4px;
     overflow-y: auto;
     color: white;
     background-color: #0d6efd;
-    z-index: 1;
     margin-right: 0.3rem;
 }
 

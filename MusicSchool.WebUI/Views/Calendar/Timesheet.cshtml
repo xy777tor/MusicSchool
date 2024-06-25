@@ -127,23 +127,31 @@
             <div class="timesheet-event-date">
                 @{
                     List<EventWindowViewModel> eventWindows = new();
-                    for (int j = 0; j < 7; j++)
+                    double heightSum = 0;
+
+                    for (int i = 0; i < 7; i++)
                     {
                         <div>
                             @{
-                                for (int i = 0; i < 24; i++)
+                                for (int j = 0; j < 24; j++)
                                 {
-                                    <span></span>
+                                    <span id="day-@(i+1)-hour-@j"></span>
                                 }
 
-                                eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(j));
-                                for (int i = 0; i < eventWindows.Count; i++)
+                                eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(i));
+
+                                foreach (var eventWindow in eventWindows)
                                 {
-                                    double eventWindowDuration = (eventWindows[i].EndDateTime - eventWindows[i].StartDateTime).TotalMinutes / 60 * 2.5;
+                                    double eventWindowDuration = (eventWindow.EndDateTime - eventWindow.StartDateTime).TotalMinutes / 60 * 2.5;
                                     string windowHeight = eventWindowDuration.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "rem";
-                                    <div class="event-window" style="height: @windowHeight">
-                                        @eventWindows[i].Title<br />
-                                        @eventWindows[i].StartDateTime.TimeOfDay
+                                    string windowTop = (((eventWindow.StartDateTime.TimeOfDay.TotalMinutes - 24 * 60) / 60 * 2.5) - heightSum)
+                                    .ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "rem";
+                                    heightSum += eventWindowDuration;
+
+                                    <div class="event-window event-window-day-@(i+1)"
+                                         style="height: @windowHeight; top: @windowTop">
+                                        @eventWindow.Title<br />
+                                        @eventWindow.StartDateTime.TimeOfDay
                                     </div>
                                 }
                             }

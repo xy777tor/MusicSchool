@@ -127,7 +127,6 @@
             <div class="timesheet-event-date">
                 @{
                     List<EventWindowViewModel> eventWindows = new();
-                    double heightSum = 0;
 
                     for (int i = 0; i < 7; i++)
                     {
@@ -135,9 +134,10 @@
                             @{
                                 for (int j = 0; j < 24; j++)
                                 {
-                                    <span id="day-@(i+1)-hour-@j"></span>
+                                    <span></span>
                                 }
 
+                                double heightSum = 0;
                                 eventWindows = Model.GetEventWindowViewModelsByDate(Model.GetMonday(Model.RequiredDay).AddDays(i));
 
                                 foreach (var eventWindow in eventWindows)
@@ -148,7 +148,7 @@
                                     .ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "rem";
                                     heightSum += eventWindowDuration;
 
-                                    <div class="event-window event-window-day-@(i+1)"
+                                    <div class="event-window"
                                          style="height: @windowHeight; top: @windowTop">
                                         @eventWindow.Title<br />
                                         @eventWindow.StartDateTime.TimeOfDay

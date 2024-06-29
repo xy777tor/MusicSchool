@@ -1,6 +1,7 @@
 using MusicSchool.DataAccess;
 using MusicSchool.Application;
 using MusicSchool.Domain;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IEventWindowService, EventWindowService>();
 builder.Services.AddSingleton<IEventWindowRepository, EventWindowRepositoryMock>();
+builder.Services.AddDbContext<MusicSchoolContext>(x =>
+    x.UseSqlServer(builder.Configuration.GetConnectionString("MusicSchoolContext")));
 
 var app = builder.Build();
 

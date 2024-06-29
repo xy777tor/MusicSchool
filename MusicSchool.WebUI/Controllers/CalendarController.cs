@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MusicSchool.WebUI.Models;
-using MusicSchool.Core;
-using MusicSchool.Application;
-using Microsoft.CodeAnalysis.Elfie.Extensions;
-using System;
+using MusicSchool.Domain;
 
 namespace MusicSchool.WebUI.Controllers;
 public class CalendarController : Controller

@@ -1,20 +1,17 @@
-﻿using MusicSchool.Core;
-using MusicSchool.Domain;
+﻿namespace MusicSchool.DataAccess;
 
-namespace MusicSchool.DataAccess;
-
-public class EventWindowRepositoryMock : IEventWindowRepository
+public class EventWindowRepositoryMock : Domain.IEventWindowRepository
 {
-    private List<EventWindow> _eventWindows = new List<EventWindow>();
+    private List<Domain.EventWindow> _eventWindows = new List<Domain.EventWindow>();
 
-    public void Create(EventWindow eventWindow)
+    public void Create(Domain.EventWindow eventWindow)
     {
         _eventWindows.Add(eventWindow);
     }
 
-    public List<EventWindow> GetWeekEvents(DateTime monday)
+    public List<Domain.EventWindow> GetWeekEvents(DateTime monday)
     {
-        List<EventWindow> weekEvents = new List<EventWindow>();
+        List<Domain.EventWindow> weekEvents = new List<Domain.EventWindow>();
 
         for (int i = 0; i < 7; i++)
         {

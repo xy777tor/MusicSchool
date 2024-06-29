@@ -1,5 +1,4 @@
-﻿using MusicSchool.Core;
-using MusicSchool.Domain;
+﻿using MusicSchool.Domain;
 
 namespace MusicSchool.Application;
 

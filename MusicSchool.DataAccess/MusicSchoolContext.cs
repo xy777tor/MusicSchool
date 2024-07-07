@@ -9,10 +9,7 @@ using System.Threading.Tasks;
 namespace MusicSchool.DataAccess;
 public class MusicSchoolContext : DbContext
 {
-    public MusicSchoolContext(DbContextOptions<MusicSchoolContext> options) : base(options)
-    {
-
-    }
+    public MusicSchoolContext(DbContextOptions<MusicSchoolContext> options) : base(options) { }
 
     public DbSet<EventWindow> eventWindows { get; set; }
 }

@@ -5,7 +5,7 @@ namespace MusicSchool.WebUI.Models;
 
 public class TimesheetViewModel
 {
-    public AddEventWindowViewModel AddEventWindowViewModel { get; } = new AddEventWindowViewModel();
+    public EventWindowViewModel AddEventWindowViewModel { get; } = new EventWindowViewModel();
 
     public List<EventWindowViewModel> EventWindows { get; set; } = new List<EventWindowViewModel>();
 

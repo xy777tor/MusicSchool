@@ -185,8 +185,9 @@
     border-radius: 4px;
     overflow-y: auto;
     color: white;
-    background-color: #0d6efd;
     margin-right: 0.3rem;
+    background-color: #0d6efd;
+    cursor: pointer;
 }
 
 .calendar-navigation {

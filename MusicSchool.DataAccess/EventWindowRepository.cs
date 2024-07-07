@@ -1,4 +1,5 @@
-﻿using MusicSchool.Domain;
+﻿using Microsoft.EntityFrameworkCore;
+using MusicSchool.Domain;
 
 namespace MusicSchool.DataAccess;
 
@@ -21,6 +22,14 @@ public class EventWindowRepository : IEventWindowRepository
         };
 
         _dbContext.eventWindows.Add(newEventWindow);
+
+        _dbContext.SaveChanges();
+    }
+
+    public void Delete(EventWindow eventWindow)
+    {
+        Entities.EventWindow eventWindowToRemove = _dbContext.eventWindows.First(ew => ew.StartDateTime == eventWindow.StartDateTime);
+        _dbContext.eventWindows.Remove(eventWindowToRemove);
 
         _dbContext.SaveChanges();
     }

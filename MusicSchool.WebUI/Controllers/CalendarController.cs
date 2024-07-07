@@ -13,7 +13,7 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddEvent(AddEventWindowViewModel viewModel)
+    public IActionResult AddEvent(EventWindowViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
@@ -33,6 +33,31 @@ public class CalendarController : Controller
         };
 
         _eventWindowService.Create(model);
+
+        return GetWeekTimesheetPage(DateTime.Today.Date.ToShortDateString());
+    }
+
+    [HttpPost]
+    public IActionResult DeleteEvent(EventWindowViewModel viewModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            return Redirect("~/Home/Error");
+        }
+
+        if (viewModel.StartDateTime == viewModel.EndDateTime)
+        {
+            return Redirect("~/Home/Error");
+        }
+
+        var model = new EventWindow()
+        {
+            Title = viewModel.Title,
+            StartDateTime = viewModel.StartDateTime,
+            EndDateTime = viewModel.EndDateTime
+        };
+
+        _eventWindowService.Delete(model);
 
         return GetWeekTimesheetPage(DateTime.Today.Date.ToShortDateString());
     }

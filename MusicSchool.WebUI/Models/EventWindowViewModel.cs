@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MusicSchool.WebUI.Models;
 
 public class EventWindowViewModel
 {
-    public required string Title { get; set; }
-    public required DateTime StartDateTime { get; set; }
-    public required DateTime EndDateTime { get; set; }
+    [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название события.")]
+    public string Title { get; set; } = null!;
+
+    [Required(ErrorMessage = "Выберите начальную дату.")]
+    public DateTime StartDateTime { get; set; } = DateTime.Today;
+
+    [Required(ErrorMessage = "Выберите конечную дату.")]
+    public DateTime EndDateTime { get; set; } = DateTime.Today;
 }

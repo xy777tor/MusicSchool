@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IEventWindowService, EventWindowService>();
-builder.Services.AddSingleton<IEventWindowRepository, EventWindowRepositoryMock>();
+builder.Services.AddTransient<IEventWindowRepository, EventWindowRepository>();
 builder.Services.AddDbContext<MusicSchoolContext>(x =>
     x.UseSqlServer(builder.Configuration.GetConnectionString("MusicSchoolContext")));
 

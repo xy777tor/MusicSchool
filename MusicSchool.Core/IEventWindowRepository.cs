@@ -4,5 +4,5 @@ public interface IEventWindowRepository
 {
     void Create(EventWindow eventWindow);
 
-    List<EventWindow> GetWeekEvents(DateTime monday);
+    List<EventWindow>? GetWeekEvents(DateTime monday);
 }

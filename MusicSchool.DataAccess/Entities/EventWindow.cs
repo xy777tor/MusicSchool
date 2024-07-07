@@ -1,4 +1,4 @@
-﻿namespace MusicSchool.DataAccess;
+﻿namespace MusicSchool.DataAccess.Entities;
 
 public class EventWindow
 {

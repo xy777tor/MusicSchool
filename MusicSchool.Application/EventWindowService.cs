@@ -26,6 +26,12 @@ public class EventWindowService : IEventWindowService
 
     public List<EventWindow> GetWeekEvents(DateTime monday)
     {
-        return _eventWindowRepository.GetWeekEvents(monday);
+        List<EventWindow>? eventWindows = _eventWindowRepository.GetWeekEvents(monday);
+        if (eventWindows == null)
+        {
+            return new List<EventWindow>();
+        }
+
+        return eventWindows;
     }
 }

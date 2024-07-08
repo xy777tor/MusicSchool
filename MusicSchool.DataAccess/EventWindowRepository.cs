@@ -26,11 +26,33 @@ public class EventWindowRepository : IEventWindowRepository
         _dbContext.SaveChanges();
     }
 
+    public void Update(EventWindow eventWindow)
+    {
+        Entities.EventWindow? eventWindowToUpdate = _dbContext.eventWindows.Find(eventWindow.Id);
+
+        if (eventWindowToUpdate is null)
+        {
+            return;
+        }
+
+        eventWindowToUpdate.Title = eventWindow.Title;
+        eventWindowToUpdate.StartDateTime = eventWindow.StartDateTime;
+        eventWindowToUpdate.EndDateTime = eventWindow.EndDateTime;
+
+        _dbContext.eventWindows.Update(eventWindowToUpdate);
+        _dbContext.SaveChanges();
+    }
+
     public void Delete(EventWindow eventWindow)
     {
-        Entities.EventWindow eventWindowToRemove = _dbContext.eventWindows.First(ew => ew.StartDateTime == eventWindow.StartDateTime);
-        _dbContext.eventWindows.Remove(eventWindowToRemove);
+        Entities.EventWindow? eventWindowToRemove = _dbContext.eventWindows.Find(eventWindow.Id);
 
+        if (eventWindowToRemove is null)
+        {
+            return;
+        }
+
+        _dbContext.eventWindows.Remove(eventWindowToRemove);
         _dbContext.SaveChanges();
     }
 
@@ -55,6 +77,7 @@ public class EventWindowRepository : IEventWindowRepository
             domainWeekEvents.Add(
                 new EventWindow
                 {
+                    Id = weekEvent.Id,
                     Title = weekEvent.Title,
                     StartDateTime = weekEvent.StartDateTime,
                     EndDateTime = weekEvent.EndDateTime

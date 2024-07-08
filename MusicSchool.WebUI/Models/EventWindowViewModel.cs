@@ -2,8 +2,11 @@
 
 namespace MusicSchool.WebUI.Models;
 
+[Serializable]
 public class EventWindowViewModel
 {
+    public int Id { get; set; }
+
     [Required(AllowEmptyStrings = false, ErrorMessage = "Введите название события.")]
     public string Title { get; set; } = null!;
 

@@ -37,6 +37,19 @@ public class EventWindowService : IEventWindowService
         }
     }
 
+    public bool Update(EventWindow model)
+    {
+        try
+        {
+            _eventWindowRepository.Update(model);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     public List<EventWindow> GetWeekEvents(DateTime monday)
     {
         List<EventWindow>? eventWindows = _eventWindowRepository.GetWeekEvents(monday);

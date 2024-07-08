@@ -1,5 +1,6 @@
 ﻿@using MusicSchool.WebUI.Views.Enums;
 @using MusicSchool.WebUI.Models;
+@using System.Text.Json;
 @model TimesheetViewModel;
 @{
     Layout = "~/Views/Shared/_TimesheetLayout.cshtml";
@@ -9,7 +10,7 @@
     string weekForward = Model.RequiredDay.AddDays(7).ToShortDateString();
 }
 
-<link rel="stylesheet" type="text/css" href="~/css/timesheet.css" />
+<link rel="stylesheet" type="text/css" href="~/css/timesheet.css" asp-append-version="true" />
 
 <div class="calendar-navigation">
     <div class="me-1">
@@ -42,16 +43,32 @@
     </div>
 </div>
 
-<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="add-event-modal" tabindex="-1" aria-labelledby="add-event-window-label" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить занятие</h1>
-                <button id="closeModal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="add-event-window-label">Добавить занятие</h1>
+                <button id="close-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div>
                 @{
-                    await Html.RenderPartialAsync("AddEventWindow", Model.AddEventWindowViewModel);
+                    await Html.RenderPartialAsync("AddEventWindow", Model.EventWindowViewModel);
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="edit-event-modal" tabindex="-1" aria-labelledby="edit-event-window-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="edit-event-window-label">Изменить занятие</h1>
+                <button id="close-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div>
+                @{
+                    await Html.RenderPartialAsync("EditEventWindow", Model.EventWindowViewModel);
                 }
             </div>
         </div>
@@ -62,9 +79,10 @@
     <div class="timesheet-header">
         <div class="timesheet-add-event-btn">
             <span></span>
-            <a id="openAddEventModal" class="timesheet-add-event btn-light rounded-circle"
+            <a id="open-add-event-modal"
+               class="timesheet-add-event btn-light rounded-circle"
                data-bs-toggle="modal"
-               data-bs-target="#addEventModal">
+               data-bs-target="#add-event-modal">
                 <div>+</div>
             </a>
         </div>
@@ -125,6 +143,7 @@
         </div>
         <div class="timesheet-event-date-column">
             <div class="timesheet-event-date">
+
                 @{
                     List<EventWindowViewModel> eventWindows = new();
 
@@ -147,9 +166,11 @@
                                     string windowTop = (((eventWindow.StartDateTime.TimeOfDay.TotalMinutes - 24 * 60) / 60 * 2.5) - heightSum)
                                     .ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "rem";
                                     heightSum += eventWindowDuration;
-
                                     <div class="event-window"
-                                         style="height: @windowHeight; top: @windowTop">
+                                         style="height: @windowHeight; top: @windowTop"
+                                         data-bs-toggle="modal"
+                                         data-bs-target="#edit-event-modal"
+                                         onclick='fillModal(@Json.Serialize(eventWindow))'>
                                         @eventWindow.Title<br />
                                         @eventWindow.StartDateTime.TimeOfDay
                                     </div>
@@ -171,31 +192,49 @@
 
 <script>
 
-    var titleInput = document.getElementById("titleInput");
-    var titleValidator = document.getElementById("title-validator");
-    var targetModal = document.getElementById("addEventModal");
-    var closeModal = document.getElementById("closeModal");
-    var openAddEventButton = document.getElementById("openAddEventModal");
+    // hot keys
+    {
+        var titleInput = document.getElementById("titleInput");
+        var titleValidator = document.getElementById("title-validator");
+        var targetModal = document.getElementById("add-event-modal");
+        var closeModal = document.getElementById("close-modal");
+        var openAddEventButton = document.getElementById("open-add-event-modal");
 
-    targetModal.addEventListener("shown.bs.modal", function () {
-        titleInput.focus();
-    });
+        targetModal.addEventListener("shown.bs.modal", function () {
+            titleInput.focus();
+        });
 
-    var openHandler = function (event) {
-        if (event.keyCode === 13 || event.keyCode === 107) {
-            openAddEventButton.click();
-            document.removeEventListener("keydown", openHandler);
-            document.addEventListener("keydown", closeHandler);
+        var openHandler = function (event) {
+            if (event.keyCode === 13 || event.keyCode === 107) {
+                openAddEventButton.click();
+                document.removeEventListener("keydown", openHandler);
+                document.addEventListener("keydown", closeHandler);
+            }
         }
+
+        var closeHandler = function (event) {
+            if (event.keyCode === 27) {
+                closeModal.click();
+                document.addEventListener("keydown", openHandler);
+            }
+        }
+
+        document.addEventListener("keydown", openHandler);
     }
 
-    var closeHandler = function (event) {
-        if (event.keyCode === 27) {
-            closeModal.click();
-            document.addEventListener("keydown", openHandler);
+    // fill edit modal window
+    {
+        var id = document.querySelector("#idInputEdit");
+        var title = document.querySelector("#titleInputEdit");
+        var startDate = document.querySelector("#startDateTimeInputEdit");
+        var endDate = document.querySelector("#endDateTimeInputEdit");
+
+        var fillModal = (event) => {
+            id.value = event.id;
+            title.value = event.title;
+            startDate.value = event.startDateTime;
+            endDate.value = event.endDateTime;
         }
     }
-
-    document.addEventListener("keydown", openHandler);
 
 </script>

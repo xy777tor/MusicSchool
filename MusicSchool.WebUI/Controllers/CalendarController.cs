@@ -17,12 +17,7 @@ public class CalendarController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return Redirect("~/Home/Error");
-        }
-
-        if (viewModel.StartDateTime == viewModel.EndDateTime)
-        {
-            return Redirect("~/Home/Error");
+            return View("AddEventWindow", viewModel);
         }
 
         var model = new EventWindow()
@@ -42,12 +37,7 @@ public class CalendarController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return Redirect("~/Home/Error");
-        }
-
-        if (viewModel.StartDateTime == viewModel.EndDateTime)
-        {
-            return Redirect("~/Home/Error");
+            return View("EditEventWindow", viewModel);
         }
 
         var model = new EventWindow()
@@ -68,12 +58,7 @@ public class CalendarController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return Redirect("~/Home/Error");
-        }
-
-        if (viewModel.StartDateTime == viewModel.EndDateTime)
-        {
-            return Redirect("~/Home/Error");
+            return View("EditEventWindow", viewModel);
         }
 
         var model = new EventWindow()

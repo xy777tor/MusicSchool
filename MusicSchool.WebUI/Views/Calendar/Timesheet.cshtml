@@ -149,11 +149,11 @@
 
                     for (int i = 0; i < 7; i++)
                     {
-                        <div>
-                            @{
+                            <div>
+                                @{
                                 for (int j = 0; j < 24; j++)
                                 {
-                                    <span></span>
+                                            <span></span>
                                 }
 
                                 double heightSum = 0;
@@ -166,17 +166,17 @@
                                     string windowTop = (((eventWindow.StartDateTime.TimeOfDay.TotalMinutes - 24 * 60) / 60 * 2.5) - heightSum)
                                     .ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "rem";
                                     heightSum += eventWindowDuration;
-                                    <div class="event-window"
-                                         style="height: @windowHeight; top: @windowTop"
-                                         data-bs-toggle="modal"
-                                         data-bs-target="#edit-event-modal"
-                                         onclick='fillModal(@Json.Serialize(eventWindow))'>
-                                        @eventWindow.Title<br />
-                                        @eventWindow.StartDateTime.TimeOfDay
-                                    </div>
+                                            <div class="event-window"
+                                                 style="height: @windowHeight; top: @windowTop"
+                                                 data-bs-toggle="modal"
+                                                 data-bs-target="#edit-event-modal"
+                                                 onclick='fillModal(@Json.Serialize(eventWindow))'>
+                                                @eventWindow.Title<br />
+                                                @eventWindow.StartDateTime.TimeOfDay
+                                            </div>
                                 }
-                            }
-                        </div>
+                                }
+                            </div>
                     }
                 }
             </div>
@@ -194,7 +194,7 @@
 
     // hot keys
     {
-        var titleInput = document.getElementById("titleInput");
+        var titleInput = document.getElementById("title-input");
         var titleValidator = document.getElementById("title-validator");
         var targetModal = document.getElementById("add-event-modal");
         var closeModal = document.getElementById("close-modal");
@@ -222,18 +222,71 @@
         document.addEventListener("keydown", openHandler);
     }
 
-    // fill edit modal window
+    // modal windows
     {
-        var id = document.querySelector("#idInputEdit");
-        var title = document.querySelector("#titleInputEdit");
-        var startDate = document.querySelector("#startDateTimeInputEdit");
-        var endDate = document.querySelector("#endDateTimeInputEdit");
+        // fill edit modal window
+        {
+            var id = document.querySelector("#id-input-edit");
+            var title = document.querySelector("#title-input-edit");
+            var startDate = document.querySelector("#start-date-time-input-edit");
+            var endDate = document.querySelector("#end-date-time-input-edit");
 
-        var fillModal = (event) => {
-            id.value = event.id;
-            title.value = event.title;
-            startDate.value = event.startDateTime;
-            endDate.value = event.endDateTime;
+            var fillModal = (event) => {
+                id.value = event.id;
+                title.value = event.title;
+                startDate.value = event.startDateTime;
+                endDate.value = event.endDateTime;
+            }
+        }
+
+        // add event modal window DateTime inputs validation
+        {
+            var startDateTimeInput = document.querySelector("#start-date-time-input");
+            var endDateTimeInput = document.querySelector("#end-date-time-input");
+            var submitButton = document.querySelector("#submit-button-add")
+            var validationWarningSpan = document.querySelector("#end-date-time-validator")
+
+            var validateAddEventModel = () => {
+                var startDateTime = new Date(startDateTimeInput.value);
+                var endDateTime = new Date(endDateTimeInput.value);
+
+                if (startDateTime >= endDateTime) {
+                    validationWarningSpan.textContent = "Дата окончания должна быть позже даты начала.";
+                    return;
+                }
+
+                if (startDateTime.getDay() !== endDateTime.getDay()) {
+                    validationWarningSpan.textContent = "Событие должно начинаться и заканчиваться в один день.";
+                    return;
+                }
+
+                submitButton.click();
+            }
+        }
+
+        // edit event modal window DateTime inputs validation
+        {
+            var startDateTimeInputEdit = document.querySelector("#start-date-time-input-edit");
+            var endDateTimeInputEdit = document.querySelector("#end-date-time-input-edit");
+            var submitButtonEdit = document.querySelector("#submit-button-edit")
+            var validationWarningSpanEdit = document.querySelector("#end-date-time-validator-edit")
+            
+            var validateEditEventModel = () => {
+                var startDateTime = new Date(startDateTimeInputEdit.value);
+                var endDateTime = new Date(endDateTimeInputEdit.value);
+
+                if (startDateTime >= endDateTime) {
+                    validationWarningSpanEdit.textContent = "Дата окончания должна быть позже даты начала.";
+                    return;
+                }
+
+                if (startDateTime.getDay() !== endDateTime.getDay()) {
+                    validationWarningSpanEdit.textContent = "Событие должно начинаться и заканчиваться в один день.";
+                    return;
+                }
+
+                submitButtonEdit.click();
+            }
         }
     }
 

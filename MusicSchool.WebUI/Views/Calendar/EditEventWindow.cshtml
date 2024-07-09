@@ -1,35 +1,35 @@
 ﻿@model MusicSchool.WebUI.Models.EventWindowViewModel;
 
 <form asp-controller="Calendar">
-    <input type="hidden" id="idInputEdit" asp-for="Id"/>
+    <input type="hidden" id="id-input-edit" asp-for="Id"/>
     <div class="ms-3">
-        <span asp-validation-for="Title" class="text-danger" id="title-validator"></span>
+        <span asp-validation-for="Title" class="text-danger" id="title-validator-edit"></span>
     </div>
     <div class="modal-body d-flex justify-content-between align-items-center">
         <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Название</label>
-        <input id="titleInputEdit"
+        <input id="title-input-edit"
                asp-for="Title"
                class="form-control w-100 h-auto m-0 align-baseline"
                placeholder="Введите название..."
                value="@Model.Title">
     </div>
     <div class="ms-3">
-        <span asp-validation-for="StartDateTime" class="text-danger" id="start-date-time-validator"></span>
+        <span asp-validation-for="StartDateTime" class="text-danger" id="start-date-time-validator-edit"></span>
     </div>
     <div class="modal-body d-flex justify-content-between align-items-center">
         <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Начало</label>
-        <input id="startDateTimeInputEdit"
+        <input id="start-date-time-input-edit"
                asp-for="StartDateTime"
                asp-format="{0:yyyy-MM-ddTHH:mm}"
                class="form-control w-100 h-auto m-0 align-baseline"
                value="@Model.StartDateTime.ToString("yyyy-MM-dd HH:mm")">
     </div>
     <div class="ms-3">
-        <span asp-validation-for="EndDateTime" class="text-danger" id="end-date-time-validator"></span>
+        <span asp-validation-for="EndDateTime" class="text-danger" id="end-date-time-validator-edit"></span>
     </div>
     <div class="modal-body d-flex justify-content-between align-items-center">
         <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Конец</label>
-        <input id="endDateTimeInputEdit"
+        <input id="end-date-time-input-edit"
                asp-for="EndDateTime"
                asp-format="{0:yyyy-MM-ddTHH:mm}"
                class="form-control w-100 h-auto m-0 align-baseline"
@@ -38,7 +38,8 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
         <button type="submit" class="btn btn-danger" asp-action="Delete">Удалить</button>
-        <button type="submit" class="btn btn-primary" asp-action="Update">Подтвердить изменения</button>
+        <button type="button" id="submit-button-validation-edit" class="btn btn-primary" onclick="validateEditEventModel();">Подтвердить изменения</button>
+        <button type="submit" id="submit-button-edit" class="btn btn-primary" asp-action="Update" style="display: none">Подтвердить изменения</button>
     </div>
 </form>
 

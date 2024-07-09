@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MusicSchool.WebUI.Models.ValitationAttributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace MusicSchool.WebUI.Models;
 
@@ -14,5 +15,7 @@ public class EventWindowViewModel
     public DateTime StartDateTime { get; set; } = DateTime.Today;
 
     [Required(ErrorMessage = "Выберите конечную дату.")]
+    [EndDateLater(ErrorMessage = "Дата окончания должна быть позже даты начала.")]
+    [EndDateSameDay(ErrorMessage = "Событие должно начинаться и заканчиваться в один день.")]
     public DateTime EndDateTime { get; set; } = DateTime.Today;
 }

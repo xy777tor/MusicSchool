@@ -30,6 +30,28 @@
                 border-color: blue;
                 border-width: 0.25em;
             }
+
+        body {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        nav.container.navbar-light {
+            margin-left: 0;
+            padding-left: 0;
+        }
+
+        main {
+            overflow-y: hidden;
+            padding-right: 4px;
+        }
     </style>
 </head>
 <body>
@@ -50,10 +72,10 @@
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link active current" aria-current="page" asp-controller="Home" asp-action="Index">Главная</a>
+                                <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Главная</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" asp-controller="Calendar" asp-action="Timesheet">Расписание</a>
+                                <a class="nav-link active current" aria-current="page" asp-controller="Calendar" asp-action="Timesheet">Расписание</a>
                             </li>
                         </ul>
                     </div>
@@ -62,18 +84,10 @@
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main role="main">
+        @RenderBody()
+    </main>
 
-    <footer class="border-top footer text-muted" style="line-height: 2.35rem">
-        <div class="container d-flex justify-content-center" style="text-align: center">
-            MusicSchool.WebUI<br />
-            &copy; 2023
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

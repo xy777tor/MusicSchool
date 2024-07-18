@@ -1,7 +1,7 @@
 ﻿@model MusicSchool.WebUI.Models.EventWindowViewModel;
 
-<form asp-controller="Calendar">
-    <input type="hidden" id="id-input-edit" asp-for="Id"/>
+<form asp-controller="Calendar" id="up-del-form">
+    <input type="hidden" id="id-input-edit" asp-for="Id" />
     <div class="ms-3">
         <span asp-validation-for="Title" class="text-danger" id="title-validator-edit"></span>
     </div>

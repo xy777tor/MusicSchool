@@ -13,11 +13,11 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddEvent(EventWindowViewModel viewModel)
+    public IActionResult Add([FromBody] EventWindowViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
-            return View("AddEventWindow", viewModel);
+            return PartialView("AddEventWindow", viewModel);
         }
 
         var model = new EventWindow()

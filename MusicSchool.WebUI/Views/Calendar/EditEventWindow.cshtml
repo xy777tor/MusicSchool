@@ -37,9 +37,8 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-        <button type="submit" class="btn btn-danger" asp-action="Delete">Удалить</button>
-        <button type="button" id="submit-button-validation-edit" class="btn btn-primary" onclick="validateEditEventModel();">Подтвердить изменения</button>
-        <button type="submit" id="submit-button-edit" class="btn btn-primary" asp-action="Update" style="display: none">Подтвердить изменения</button>
+        <button type="button" id="delete-button" class="btn btn-danger" onclick="deleteWindow();">Удалить</button>
+        <button type="button" id="edit-button" class="btn btn-primary" onclick="editEventWindow();">Подтвердить изменения</button>
     </div>
 </form>
 

@@ -64,7 +64,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="edit-event-window-label">Изменить занятие</h1>
-                <button id="close-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button id="close-modal-edit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div>
                 @{
@@ -263,7 +263,7 @@
             }
         }
 
-        var addEventWindow = () => {
+        var addEventWindow = function () {
             var viewModel = {
                 Id: 0,
                 Title: $("#title-input").val(),
@@ -287,6 +287,57 @@
                     } else {
                         $("#add-form").replaceWith(response);
                     }
+                }
+            });
+        }
+
+        var editEventWindow = function () {
+            var viewModel = {
+                Id: $("#id-input-edit").val(),
+                Title: $("#title-input-edit").val(),
+                StartDateTime: $("#start-date-time-input-edit").val(),
+                EndDateTime: $("#end-date-time-input-edit").val()
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Update", "Calendar")",
+                data: JSON.stringify(viewModel),
+                contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: (response) => {
+                    var timesheet = $(response).find(".timesheet");
+                    var success = timesheet.length > 0;
+
+                    if (success) {
+                        $("#close-modal-edit").click();
+                        $(".timesheet").replaceWith(timesheet);
+                    } else {
+                        $("#up-del-form").replaceWith(response);
+                    }
+                }
+            });
+        }
+
+        var deleteWindow = function () {
+
+            let data = new FormData();
+            var id = $("#id-input-edit").val();
+            var date = $("#start-date-time-input-edit").val();
+            data.append("id", id);
+            data.append("date", date);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Delete", "Calendar")",
+                data: data,
+                contentType: false,
+                processData: false,
+                dataType: "html",
+                success: (response) => {
+                    var timesheet = $(response).find(".timesheet");
+                    $("#close-modal-edit").click();
+                    $(".timesheet").replaceWith(timesheet);
                 }
             });
         }

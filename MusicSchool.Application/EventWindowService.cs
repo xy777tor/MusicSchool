@@ -24,11 +24,11 @@ public class EventWindowService : IEventWindowService
         }
     }
 
-    public bool Delete(EventWindow model)
+    public bool Delete(int id)
     {
         try
         {
-            _eventWindowRepository.Delete(model);
+            _eventWindowRepository.Delete(id);
             return true;
         }
         catch (Exception)

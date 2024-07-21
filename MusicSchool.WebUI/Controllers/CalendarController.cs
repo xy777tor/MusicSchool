@@ -33,32 +33,24 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public IActionResult Delete(EventWindowViewModel viewModel)
+    public IActionResult Delete([FromForm] int id, [FromForm] DateTime date)
     {
-        if (!ModelState.IsValid)
+        if (id == 0 && date == DateTime.MinValue)
         {
-            return View("EditEventWindow", viewModel);
+            throw new ArgumentException();
         }
 
-        var model = new EventWindow()
-        {
-            Id = viewModel.Id,
-            Title = viewModel.Title,
-            StartDateTime = viewModel.StartDateTime,
-            EndDateTime = viewModel.EndDateTime
-        };
+        _eventWindowService.Delete(id);
 
-        _eventWindowService.Delete(model);
-
-        return GetWeekTimesheetPage(model.StartDateTime.ToShortDateString());
+        return GetWeekTimesheetPage(date.ToShortDateString());
     }
 
     [HttpPost]
-    public IActionResult Update(EventWindowViewModel viewModel)
+    public IActionResult Update([FromBody] EventWindowViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
-            return View("EditEventWindow", viewModel);
+            return PartialView("EditEventWindow", viewModel);
         }
 
         var model = new EventWindow()
@@ -81,7 +73,7 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public ViewResult PickDate(TimesheetViewModel viewModel)
+    public IActionResult PickDate(TimesheetViewModel viewModel)
     {
         return GetWeekTimesheetPage(viewModel.RequiredDay.ToShortDateString());
     }

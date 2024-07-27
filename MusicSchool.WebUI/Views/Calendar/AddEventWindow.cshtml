@@ -2,7 +2,7 @@
 
 <form asp-controller="Calendar" asp-action="Add" id="add-form">
     <div class="ms-3">
-        <span asp-validation-for="Title" class="text-danger" id="title-validator"></span>
+        <span asp-validation-for="Title" class="text-danger validator" id="title-validator"></span>
     </div>
     <div class="modal-body d-flex justify-content-between align-items-center">
         <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Название</label>
@@ -12,7 +12,7 @@
                placeholder="Введите название...">
     </div>
     <div class="ms-3">
-        <span asp-validation-for="StartDateTime" class="text-danger" id="start-date-time-validator"></span>
+        <span asp-validation-for="StartDateTime" class="text-danger validator" id="start-date-time-validator"></span>
     </div>
     <div class="modal-body d-flex justify-content-between align-items-center">
         <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Начало</label>
@@ -22,7 +22,7 @@
                class="form-control w-100 h-auto m-0 align-baseline">
     </div>
     <div class="ms-3">
-        <span asp-validation-for="EndDateTime" class="text-danger" id="end-date-time-validator"></span>
+        <span asp-validation-for="EndDateTime" class="text-danger validator" id="end-date-time-validator"></span>
     </div>
     <div class="modal-body d-flex justify-content-between align-items-center">
         <label class="form-label w-auto h-100 mb-0 me-2 align-baseline">Конец</label>
@@ -33,7 +33,7 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-        <button type="button" id="submit-button-add" class="btn btn-primary" onclick="addEventWindow();">Добавить</button>
+        <button type="submit" id="submit-button-add" class="btn btn-primary">Добавить</button>
     </div>
 </form>
 

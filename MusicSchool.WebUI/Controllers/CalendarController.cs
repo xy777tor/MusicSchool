@@ -13,7 +13,7 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public IActionResult Add([FromBody] EventWindowViewModel viewModel)
+    public IActionResult Add([FromForm] EventWindowViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
@@ -46,7 +46,7 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public IActionResult Update([FromBody] EventWindowViewModel viewModel)
+    public IActionResult Update([FromForm] EventWindowViewModel viewModel)
     {
         if (!ModelState.IsValid)
         {
@@ -73,7 +73,7 @@ public class CalendarController : Controller
     }
 
     [HttpPost]
-    public IActionResult PickDate(TimesheetViewModel viewModel)
+    public IActionResult PickDate([FromForm] TimesheetViewModel viewModel)
     {
         return GetWeekTimesheetPage(viewModel.RequiredDay.ToShortDateString());
     }

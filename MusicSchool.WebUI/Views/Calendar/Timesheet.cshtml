@@ -14,32 +14,17 @@
 
 <div class="calendar-navigation">
     <div class="me-1">
-        <form method="post" asp-controller="Calendar" asp-action="PickDate">
-            <input type="date" value="@Model.RequiredDay.ToString("yyyy-MM-dd")" asp-for="RequiredDay" />
+        @* <h3>Переделать запрос</h3> *@
+        <form asp-controller="Calendar" asp-action="PickDate" id="pick-date-form">
+            <input type="date" value="@Model.RequiredDay.ToString("yyyy-MM-dd")" asp-for="RequiredDay" id="date-to-pick" />
             <button type="submit" class="btn btn-primary">Перейти</button>
         </form>
     </div>
     <div>
-        <form method="get">
-            <button asp-controller="Calendar"
-                    asp-action="Timesheet"
-                    asp-route-date="@DateTime.Today.ToShortDateString()"
-                    class="btn btn-primary">
-                Сегодня
-            </button>
-            <button asp-controller="Calendar"
-                    asp-action="Timesheet"
-                    asp-route-date="@weekBackward"
-                    class="btn btn-primary">
-                &lt;
-            </button>
-            <button asp-controller="Calendar"
-                    asp-action="Timesheet"
-                    asp-route-date="@weekForward"
-                    class="btn btn-primary">
-                &gt;
-            </button>
-        </form>
+        @* <h3>Переделать запрос</h3> *@
+        <button class="btn btn-primary" onclick="getToday()">Сегодня</button>
+        <button class="btn btn-primary" onclick="getPreviousWeek()">&lt;</button>
+        <button class="btn btn-primary" onclick="getNextWeek()">&gt;</button>
     </div>
 </div>
 
@@ -64,7 +49,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="edit-event-window-label">Изменить занятие</h1>
-                <button id="close-modal" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button id="close-modal-edit" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div>
                 @{
@@ -192,103 +177,230 @@
 
 <script>
     // hot keys
-    {
-        var titleInput = document.getElementById("title-input");
-        var titleValidator = document.getElementById("title-validator");
-        var targetModal = document.getElementById("add-event-modal");
-        var closeModal = document.getElementById("close-modal");
-        var openAddEventButton = document.getElementById("open-add-event-modal");
+    var addHotKeys = function () {
+        var titleInput = document.getElementById("title-input")
+        var titleValidator = document.getElementById("title-validator")
+        var targetModal = document.getElementById("add-event-modal")
+        var closeModal = document.getElementById("close-modal")
+        var openAddEventButton = document.getElementById("open-add-event-modal")
 
         targetModal.addEventListener("shown.bs.modal", function () {
-            titleInput.focus();
-        });
+            titleInput.focus()
+        })
 
         var openHandler = function (event) {
             if (event.keyCode === 13 || event.keyCode === 107) {
-                openAddEventButton.click();
-                document.removeEventListener("keydown", openHandler);
-                document.addEventListener("keydown", closeHandler);
+                openAddEventButton.click()
+                document.removeEventListener("keydown", openHandler)
+                document.addEventListener("keydown", closeHandler)
             }
         }
 
         var closeHandler = function (event) {
             if (event.keyCode === 27) {
-                closeModal.click();
-                document.addEventListener("keydown", openHandler);
+                closeModal.click()
+                document.addEventListener("keydown", openHandler)
             }
         }
 
-        document.addEventListener("keydown", openHandler);
+        document.addEventListener("keydown", openHandler)
     }
+
+    addHotKeys()
 
     // modal windows
     {
         // fill edit modal window
         {
-            var id = document.querySelector("#id-input-edit");
-            var title = document.querySelector("#title-input-edit");
-            var startDate = document.querySelector("#start-date-time-input-edit");
-            var endDate = document.querySelector("#end-date-time-input-edit");
+            var id = document.querySelector("#id-input-edit")
+            var title = document.querySelector("#title-input-edit")
+            var startDate = document.querySelector("#start-date-time-input-edit")
+            var endDate = document.querySelector("#end-date-time-input-edit")
 
-            var fillModal = (event) => {
-                id.value = event.id;
-                title.value = event.title;
-                startDate.value = event.startDateTime;
-                endDate.value = event.endDateTime;
+            var fillModal = function (event) {
+                id.value = event.id
+                title.value = event.title
+                startDate.value = event.startDateTime
+                endDate.value = event.endDateTime
             }
         }
 
-        // edit event modal window DateTime inputs validation
-        {
-            var startDateTimeInputEdit = document.querySelector("#start-date-time-input-edit");
-            var endDateTimeInputEdit = document.querySelector("#end-date-time-input-edit");
-            var submitButtonEdit = document.querySelector("#submit-button-edit");
-            var validationWarningSpanEdit = document.querySelector("#end-date-time-validator-edit");
-
-            var validateEditEventModel = () => {
-                var startDateTime = new Date(startDateTimeInputEdit.value);
-                var endDateTime = new Date(endDateTimeInputEdit.value);
-
-                if (startDateTime >= endDateTime) {
-                    validationWarningSpanEdit.textContent = "Дата окончания должна быть позже даты начала.";
-                    return;
-                }
-
-                if (startDateTime.getDay() !== endDateTime.getDay()) {
-                    validationWarningSpanEdit.textContent = "Событие должно начинаться и заканчиваться в один день.";
-                    return;
-                }
-
-                submitButtonEdit.click();
-            }
+        var clearValidation = function () {
+            $(".validator.text-danger").html("")
         }
 
-        var addEventWindow = () => {
-            var viewModel = {
-                Id: 0,
-                Title: $("#title-input").val(),
-                StartDateTime: $("#start-date-time-input").val(),
-                EndDateTime: $("#end-date-time-input").val()
-            }
+        var addForm = document.querySelector("#add-form")
 
+        var updateAddForm = function () {
+            addForm = document.querySelector("#add-form")
+            addForm.addEventListener("submit", (event) => {
+                event.preventDefault()
+                addEventWindow()
+            })
+        }
+
+        updateAddForm()
+
+        var addEventWindow = function () {
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("Add", "Calendar")",
-                data: JSON.stringify(viewModel),
-                contentType: "application/json; charset=utf-8",
+                data: new FormData(addForm),
+                contentType: false,
+                processData: false,
                 dataType: "html",
                 success: (response) => {
-                    var timesheet = $(response).find(".timesheet");
-                    var success = timesheet.length > 0;
+                    var timesheet = $(response).find(".timesheet-body")
+                    var success = timesheet.length > 0
 
                     if (success) {
-                        $("#close-modal").click();
-                        $(".timesheet").replaceWith(timesheet);
+                        $("#close-modal").click()
+                        $(".timesheet-body").replaceWith(timesheet)
+                        clearValidation()
                     } else {
-                        $("#add-form").replaceWith(response);
+                        $("#add-form").replaceWith(response)
+                        updateAddForm()
+                    }
+                }
+            })
+        }
+
+        var editForm = document.querySelector("#up-del-form")
+
+        var updateEditForm = function () {
+            editForm = document.querySelector("#up-del-form")
+            editForm.addEventListener("submit", (event) => {
+                event.preventDefault()
+                editEventWindow()
+            })
+        }
+
+        updateEditForm()
+
+        var editEventWindow = function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Update", "Calendar")",
+                data: new FormData(editForm),
+                contentType: false,
+                processData: false,
+                dataType: "html",
+                success: (response) => {
+                    var timesheet = $(response).find(".timesheet-body")
+                    var success = timesheet.length > 0
+
+                    if (success) {
+                        $("#close-modal-edit").click()
+                        $(".timesheet-body").replaceWith(timesheet)
+                        clearValidation()
+                    } else {
+                        $("#up-del-form").replaceWith(response)
+                        updateEditForm()
                     }
                 }
             });
         }
+
+        var deleteWindow = function () {
+            var data = new FormData()
+            var id = $("#id-input-edit").val()
+            var date = $("#start-date-time-input-edit").val()
+            data.append("id", id)
+            data.append("date", date)
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Delete", "Calendar")",
+                data: data,
+                contentType: false,
+                processData: false,
+                dataType: "html",
+                success: (response) => {
+                    var timesheet = $(response).find(".timesheet-body")
+                    $("#close-modal-edit").click()
+                    $(".timesheet-body").replaceWith(timesheet)
+                }
+            });
+        }
+    }
+
+    var currentDate = new Date("@Model.RequiredDay.ToString("yyyy-MM-dd")")
+    var datePickerForm = document.querySelector("#pick-date-form")
+    var dateToPick = document.querySelector("#date-to-pick")
+
+    var getToday = function () {
+        $.ajax({
+            type: "get",
+            url: "Timesheet/@DateTime.Today.ToString("dd.MM.yyyy")",
+            dataType: "html",
+            success: (response) => {
+                var timesheet = $(response).find(".timesheet-body")
+                var dates = $(response).find(".timesheet-date")
+                $(".timesheet-body").replaceWith(timesheet)
+                $(".timesheet-date").replaceWith(dates)
+                currentDate = new Date()
+                dateToPick.value = currentDate.toISOString().split('T')[0]
+            }
+        })
+    }
+
+    var getPreviousWeek = function () {
+        var previousWeekDate = new Date(currentDate)
+        previousWeekDate.setDate(currentDate.getDate() - 7)
+        $.ajax({
+            type: "get",
+            url: "Timesheet/" + previousWeekDate.getDate() + '.' + (previousWeekDate.getMonth() + 1) + '.' + previousWeekDate.getFullYear(),
+            dataType: "html",
+            success: (response) => {
+                var timesheet = $(response).find(".timesheet-body")
+                var dates = $(response).find(".timesheet-date")
+                $(".timesheet-body").replaceWith(timesheet)
+                $(".timesheet-date").replaceWith(dates)
+                currentDate.setDate(currentDate.getDate() - 7)
+                dateToPick.value = currentDate.toISOString().split('T')[0]
+            }
+        })
+    }
+
+    var getNextWeek = function () {
+        var nextWeekDate = new Date(currentDate)
+        nextWeekDate.setDate(currentDate.getDate() + 7)
+        $.ajax({
+            type: "get",
+            url: "Timesheet/" + nextWeekDate.getDate() + '.' + (nextWeekDate.getMonth() + 1) + '.' + nextWeekDate.getFullYear(),
+            dataType: "html",
+            success: (response) => {
+                var timesheet = $(response).find(".timesheet-body")
+                var dates = $(response).find(".timesheet-date")
+                $(".timesheet-body").replaceWith(timesheet)
+                $(".timesheet-date").replaceWith(dates)
+                currentDate.setDate(currentDate.getDate() + 7)
+                dateToPick.value = currentDate.toISOString().split('T')[0]
+            }
+        })
+    }
+
+    datePickerForm.addEventListener("submit", (event) => {
+        event.preventDefault()
+        pickDate()
+    })
+
+    var pickDate = function () {
+        var formData = new FormData(datePickerForm)
+        $.ajax({
+            type: "post",
+            url: "@Url.Action("PickDate", "Calendar")",
+            dataType: "html",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: (response) => {
+                var timesheet = $(response).find(".timesheet-body")
+                var dates = $(response).find(".timesheet-date")
+                $(".timesheet-body").replaceWith(timesheet)
+                $(".timesheet-date").replaceWith(dates)
+                currentDate = new Date(formData.get("RequiredDay"))
+            }
+        })
     }
 </script>

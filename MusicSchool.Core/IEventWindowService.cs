@@ -6,7 +6,7 @@ public interface IEventWindowService
 
     List<EventWindow> GetWeekEvents(DateTime monday);
 
-    bool Delete(EventWindow model);
+    bool Delete(int id);
 
     bool Update(EventWindow model);
 }

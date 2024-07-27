@@ -43,9 +43,9 @@ public class EventWindowRepository : IEventWindowRepository
         _dbContext.SaveChanges();
     }
 
-    public void Delete(EventWindow eventWindow)
+    public void Delete(int id)
     {
-        Entities.EventWindow? eventWindowToRemove = _dbContext.eventWindows.Find(eventWindow.Id);
+        Entities.EventWindow? eventWindowToRemove = _dbContext.eventWindows.Find(id);
 
         if (eventWindowToRemove is null)
         {
